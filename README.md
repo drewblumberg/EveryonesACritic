@@ -1,7 +1,7 @@
 Everyone's A Critic
 ================
 
-# Movie Rating and Data Tracker
+Movie Rating and Data Tracker
 
 ## Elevator Pitch
 
