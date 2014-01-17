@@ -10,16 +10,23 @@ User Stories
   Acceptance Criteria:
     * Prints out movies in the year 2000 by rating
 
-2. As a critic I want to create a record of my rating of a movie so that I have a living record of my ratings.
+2. As a critic I want to create a record of a movie in the database so I can make reviews against it.
 
-  Usage: ./eac create "Title" "Genre" "Rating" "Year" "Length" "Budget" 
+  Usage: ./eac create movie "Title" "Genre" "Year" "Length" "Budget" 
 
   Acceptance Criteria:
     * Creates a record of a movie with each piece of information
-    * Requires first three arguments
-    * Assigns a value of null to arguments 4-6 if none entered
+    * If a movie with the title already exists, deny creation of movie.
 
-3. As a critic I want to view budgets for films so that I can assess the economic impact of the film.
+3. As a critic I want to create a record of a rating in the database so I can make multiple reviews for a movie if necessary.
+
+  Usage: ./eac create rating "Title" "Rating"
+
+  Acceptance Criteria:
+    * Creates a record of a rating for a movie
+    * If no title exists display like-named movies
+
+4. As a critic I want to view budgets for films so that I can assess the economic impact of the film.
 
   Usage: ./eac movie "Title"
 
@@ -28,7 +35,7 @@ User Stories
     * If no movie found it prints out similarly-named movies
     * Multiple records can be created for the same movie
 
-4. As a critic I want to be able to find MPAA ratings so that I can make lists of movies recommended for particular age groups.
+5. As a critic I want to be able to find MPAA ratings so that I can make lists of movies recommended for particular age groups.
 
   Usage: ./eac movies by-MPAA R 
 
@@ -38,7 +45,7 @@ User Stories
     * No rating argument will return all movies with ratings sorted by G, PG, PG-13, R
     * Could add other options like year
 
-5. As a critic I want to categorize my ratings by genre to make it easier on my readers who only enjoy certain genres.
+6. As a critic I want to categorize my ratings by genre to make it easier on my readers who only enjoy certain genres.
 
   Usage: ./eac movies by-genre Comedy
 
@@ -47,22 +54,21 @@ User Stories
     * No genre argument will return all movies sorted by alphabetical genre
     * Could add other options like year
 
-6. As a critic I want to be able to update my ratings if I make an error in logging a film so that I can be as accurate as possible.
+7. As a critic I want to be able to update my ratings if I make an error in logging a film so that I can be as accurate as possible.
 
-  Usage: ./eac update "Title" year 2010 [id: optional] 
-
-  Acceptance Criteria:
-    * Updates an attribute for a movie with that title
-    * If multiple movie records return, a list with ids will display. User must provide a specific id.
-    * Only one attribute can be updated at a time
-
-7. As a critic I want to be able to delete my ratings if I make an error in logging a film so that I can be as accurate as possible.
-
-  Usage: ./eac delete "Title" [id: optional] 
+  Usage: ./eac update rating "Title" "new_rating" [id: optional] 
 
   Acceptance Criteria:
-    * Deletes an attribute for a movie with that title
-    * If multiple movie records return, a list with ids will display. User must provide a specific id.
+    * Updates the rating for a movie with that title
+    * If multiple results for that movie, supply ratingsID for each entry
+
+8. As a critic I want to be able to delete my ratings if I make an error in logging a film so that I can be as accurate as possible.
+
+  Usage: ./eac delete rating "Title" [id: optional] 
+
+  Acceptance Criteria:
+    * Deletes the rating record for a movie with that title
+    * If multiple results for that movie, supply ratingsID for each entry
 
 ## Movie-goer
 
