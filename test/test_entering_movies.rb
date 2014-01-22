@@ -1,4 +1,5 @@
 require_relative 'helper'
+require 'sqlite3'
 
 class TestEnteringMovies < MiniTest::Unit::TestCase
   def test_valid_movie_information_gets_printed

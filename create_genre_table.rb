@@ -1,6 +1,6 @@
 require 'sqlite3'
 
-db = SQLite3::Database.new "./data/critic.db"
+db = SQLite3::Database.new "./db/critic_production.db"
 
 db.execute <<-SQL
   drop table genres;
