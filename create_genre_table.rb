@@ -43,3 +43,18 @@ all_genres.each do |genre|
   db.execute "INSERT INTO genres values ( ?, ?, ?, ?, ?, ?, ?, ? )", genre
 end
 
+CREATE TABLE movies (
+  movieID INTEGER PRIMARY KEY,
+  title VARCHAR(50),
+  year INTEGER,
+  length INTEGER,
+  budget INTEGER,
+  aggregateRating INTEGER,
+  totalReviews INTEGER,
+  mpaa VARCHAR(6)
+);
+
+INSERT INTO movies(movieID,title,year,length,budget,aggregateRating,totalReviews,mpaa)
+SELECT movieID,title,year,length,budget,rating,votes,mpaa
+FROM tmp_movies;
+
