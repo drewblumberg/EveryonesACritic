@@ -50,4 +50,34 @@ class TestEnteringMovies < MiniTest::Unit::TestCase
     expected = "You must provide the genre of the movie you are adding."
     assert_command_output expected, command
   end
+
+  def test_error_message_for_missing_year
+    command = "./eac create movie Anchorman2 --genre 4 --length 100 --budget 20000000 --mpaa R --environment test"
+    expected = "You must provide the year of the movie you are adding."
+    assert_command_output expected, command
+  end
+
+  def test_error_message_for_missing_length
+    command = "./eac create movie Anchorman2 --genre 4 --year 2013 --budget 20000000 --mpaa R --environment test"
+    expected = "You must provide the length of the movie you are adding."
+    assert_command_output expected, command
+  end
+
+  def test_error_message_for_missing_budget
+    command = "./eac create movie Anchorman2 --year 2013 --length 100 --genre 4 --mpaa R --environment test"
+    expected = "You must provide the budget of the movie you are adding."
+    assert_command_output expected, command
+  end
+
+  def test_error_message_for_missing_mpaa
+    command = "./eac create movie Anchorman2 --year 2013 --length 100 --budget 20000000 --genre 4 --environment test"
+    expected = "You must provide the mpaa of the movie you are adding."
+    assert_command_output expected, command
+  end
+
+  def test_error_message_for_missing_name
+    command = "./eac create movie"
+    expected = "You must provide the name of the movie you are creating.\nYou must provide the genre and year and length and budget and mpaa of the movie you are adding."
+    assert_command_output expected, command
+  end
 end
