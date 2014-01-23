@@ -7,7 +7,7 @@ category = ARGV[1]
 options = ParseArguments.parse
 options[:name] = ARGV[2]
 
-error_messages = ParseArguments.validate(options)
+error_messages = ParseArguments.validate(options,category)
 if error_messages.empty?
   require 'sqlite3'
 
