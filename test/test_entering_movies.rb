@@ -80,4 +80,15 @@ class TestEnteringMovies < MiniTest::Unit::TestCase
     expected = "You must provide the name of the movie you are creating.\nYou must provide the genre and year and length and budget and mpaa of the movie you are adding."
     assert_command_output expected, command
   end
+
+  def test_duplicate_movies_cannot_be_created
+    `./eac create movie Anchorman2 --genre 4 --year 2013 --length 100 --budget 20000000 --mpaa R --environment test`
+    command = "./eac create movie Anchorman2 --genre 4 --year 2013 --length 100 --budget 20000000 --mpaa R --environment test"
+    expected = "A movie titled Anchorman2 has already been created."
+    assert_command_output expected, command
+
+    # Delete movie from db
+    database = Environment.database_connection("test")
+    database.execute "DELETE FROM movies WHERE title = 'Anchorman2'"
+  end
 end
