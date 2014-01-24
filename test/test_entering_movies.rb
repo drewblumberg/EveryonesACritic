@@ -7,10 +7,6 @@ class TestEnteringMovies < MiniTest::Unit::TestCase
     command = "./eac create movie Anchorman2 --genre 4 --year 2013 --length 100 --budget 20000000 --mpaa R --environment test"
     expected = "A movie titled Anchorman2 with genre 4, year 2013, length 100, budget 20000000, and mpaa R was created."
     assert_command_output expected, command
-
-    # Delete movie from db
-    database = Environment.database_connection("test")
-    database.execute "DELETE FROM movies WHERE title = 'Anchorman2'"
   end
 
   def test_valid_movie_gets_saved
@@ -26,9 +22,6 @@ class TestEnteringMovies < MiniTest::Unit::TestCase
 
     result = database.execute "SELECT COUNT(*) FROM movies"
     assert_equal (orig_movies[0][0] + 1), result[0][0]
-
-    # Delete movie from db
-    database.execute "DELETE FROM movies WHERE title = 'Anchorman2'"
   end
 
   def test_invalid_movie_doesnt_get_saved
@@ -86,9 +79,12 @@ class TestEnteringMovies < MiniTest::Unit::TestCase
     command = "./eac create movie Anchorman2 --genre 4 --year 2013 --length 100 --budget 20000000 --mpaa R --environment test"
     expected = "A movie titled Anchorman2 has already been created."
     assert_command_output expected, command
+  end
 
+  def teardown
     # Delete movie from db
     database = Environment.database_connection("test")
-    database.execute "DELETE FROM movies WHERE title = 'Anchorman2'"
+    result = database.execute "SELECT * FROM movies WHERE title = 'Anchorman2'"
+    database.execute "DELETE FROM movies WHERE title = 'Anchorman2'" if result.length > 0
   end
 end
