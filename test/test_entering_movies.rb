@@ -2,7 +2,7 @@ require_relative 'helper'
 require_relative '../lib/environment'
 require 'sqlite3'
 
-class TestEnteringMovies < MiniTest::Unit::TestCase
+class TestEnteringMovies < MovieTest
   def test_valid_movie_information_gets_printed
     command = "./eac create movie Anchorman2 --genre 4 --year 2013 --length 100 --budget 20000000 --mpaa R --environment test"
     expected = "A movie titled Anchorman2 with genre 4, year 2013, length 100, budget 20000000, and mpaa R was created."
@@ -10,8 +10,6 @@ class TestEnteringMovies < MiniTest::Unit::TestCase
   end
 
   def test_valid_movie_gets_saved
-    database = Environment.database_connection("test")
-
     # Current movie numbers
     orig_movies = database.execute "SELECT COUNT(*) FROM movies"
 
@@ -25,8 +23,6 @@ class TestEnteringMovies < MiniTest::Unit::TestCase
   end
 
   def test_invalid_movie_doesnt_get_saved
-    database = Environment.database_connection("test")
-
     # Current movie numbers
     orig_movies = database.execute "SELECT COUNT(*) FROM movies"
 
@@ -81,10 +77,4 @@ class TestEnteringMovies < MiniTest::Unit::TestCase
     assert_command_output expected, command
   end
 
-  def teardown
-    # Delete movie from db
-    database = Environment.database_connection("test")
-    result = database.execute "SELECT * FROM movies WHERE title = 'Anchorman2'"
-    database.execute "DELETE FROM movies WHERE title = 'Anchorman2'" if result.length > 0
-  end
 end

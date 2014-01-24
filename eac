@@ -1,27 +1,21 @@
 #!/usr/bin/env ruby
-require_relative 'lib/parse_arguments'
 require_relative 'lib/environment'
+require_relative 'lib/parse_arguments'
 
 command = ARGV[0]
 category = ARGV[1]
 options = ParseArguments.parse
 options[:name] = ARGV[2]
 
+Environment.environment = options[:environment] || "production"
+database = Environment.database_connection
+
 error_messages = ParseArguments.validate(options,category)
 if error_messages.empty?
-  require 'sqlite3'
-
-  db = Environment.database_connection(options[:environment])
-  movie_row = db.execute "SELECT * FROM movies WHERE CAST(title AS varchar)='Anchorman2'"
-
-  if movie_row.length == 0
-    totalMovieIDs = db.execute("SELECT COUNT(*) FROM movies")
-    movieID = totalMovieIDs[0][0] + 1
-
-    statement = "insert into movies(movieID,title,year,length,budget,aggregateRating,totalReviews,mpaa,genreID) values (#{movieID},'#{options[:name]}',#{options[:year]},#{options[:length]},#{options[:budget]},NULL,NULL,'#{options[:mpaa]}',#{options[:genre]})"
-    db.execute(statement)
-
-    puts "A #{category} titled #{options[:name]} with genre #{options[:genre]}, year #{options[:year]}, length #{options[:length]}, budget #{options[:budget]}, and mpaa #{options[:mpaa]} was created."
+  movie = Movie.new(options)
+  success = movie.save
+  if success
+    puts "A #{category} titled #{movie.name} with genre #{movie.genre}, year #{movie.year}, length #{movie.length}, budget #{movie.budget}, and mpaa #{movie.mpaa} was created."
   else
     puts "A #{category} titled #{options[:name]} has already been created."
   end
