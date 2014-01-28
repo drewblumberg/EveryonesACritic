@@ -1,24 +1,31 @@
 #!/usr/bin/env ruby
 require_relative 'lib/environment'
 require_relative 'lib/parse_arguments'
+require 'pry'
 
 command = ARGV[0]
 category = ARGV[1]
 options = ParseArguments.parse
-options[:name] = ARGV[2]
+options[:name] ||= ARGV[2]
 
 Environment.environment = options[:environment] || "production"
 database = Environment.database_connection
 
-error_messages = ParseArguments.validate(options,category)
-if error_messages.empty?
-  movie = Movie.new(options)
-  success = movie.save
-  if success
-    puts "A #{category} titled #{movie.name} with genre #{movie.genre}, year #{movie.year}, length #{movie.length}, budget #{movie.budget}, and mpaa #{movie.mpaa} was created."
-  else
-    puts "A #{category} titled #{options[:name]} has already been created."
-  end
+if command == "search"
+  found_movie = Movie.find_movie(options[:name])
+  formatted_result = "#{options[:name]} (#{found_movie.aggregateRating} review score): a #{found_movie.genre} released in #{found_movie.year}, it has a length of #{found_movie.length} minutes, a budget of $#{found_movie.budget}, and is rated #{found_movie.mpaa}."
+  puts formatted_result
 else
-  puts error_messages
+  error_messages = ParseArguments.validate(options,category)
+  if error_messages.empty?
+    movie = Movie.new(options)
+    success = movie.save
+    if success
+      puts "A #{category} titled #{movie.name} with genre #{movie.genre}, year #{movie.year}, length #{movie.length}, budget #{movie.budget}, and mpaa #{movie.mpaa} was created."
+    else
+      puts "A #{category} titled #{options[:name]} has already been created."
+    end
+  else
+    puts error_messages
+  end
 end

@@ -15,8 +15,8 @@ class MovieTest < MiniTest::Unit::TestCase
 
   def teardown
     # Delete movie from db
-    result = database.execute "SELECT * FROM movies WHERE title = 'Anchorman2'"
-    database.execute "DELETE FROM movies WHERE title = 'Anchorman2'" if result.length > 0
+    result = database.execute "SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'"
+    database.execute "DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'" if result.length > 0
   end
 
   def assert_in_output output, *args

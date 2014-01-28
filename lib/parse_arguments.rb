@@ -27,6 +27,10 @@ class ParseArguments
         options[:mpaa] = mpaa
       end
 
+      opts.on("--id [ID]", "The id of the object we are editing") do |id|
+        options[:id] = id
+      end
+
       opts.on("--environment [ENV]", "The database environment") do |env|
         options[:environment] = env
       end
