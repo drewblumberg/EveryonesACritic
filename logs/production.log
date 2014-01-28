@@ -6,3 +6,7 @@ I, [2014-01-28T10:09:59.236731 #13023]  INFO -- : Executing: SELECT * FROM movie
 I, [2014-01-28T10:10:28.410997 #13117]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)=''
 I, [2014-01-28T10:10:46.899158 #13206]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)=''
 I, [2014-01-28T10:13:07.522599 #13322]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)=''
+I, [2014-01-28T10:35:57.068471 #16272]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Shawshank Redemption'
+I, [2014-01-28T10:36:11.627663 #16365]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Green Mile The'
+I, [2014-01-28T10:49:43.329784 #16628]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Green Mile Thesdfsdf'
+I, [2014-01-28T10:54:24.645073 #16865]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Green Mile Thesdfsdf'

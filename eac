@@ -13,7 +13,11 @@ database = Environment.database_connection
 
 if command == "search"
   found_movie = Movie.find_movie(options[:name])
-  formatted_result = "#{options[:name]} (#{found_movie.aggregateRating} review score): a #{found_movie.genre} released in #{found_movie.year}, it has a length of #{found_movie.length} minutes, a budget of $#{found_movie.budget}, and is rated #{found_movie.mpaa}."
+  if found_movie.nil?
+    formatted_result = "No movie found with title '#{options[:name]}'. Would you like to create one? Just use the command 'movie create'."
+  else
+    formatted_result = "#{options[:name]} (#{found_movie.aggregateRating} review score): a #{found_movie.genre} released in #{found_movie.year}, it has a length of #{found_movie.length} minutes, a budget of $#{found_movie.budget}, and is rated #{found_movie.mpaa}."
+  end
   puts formatted_result
 else
   error_messages = ParseArguments.validate(options,category)
