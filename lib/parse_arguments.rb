@@ -31,6 +31,10 @@ class ParseArguments
         options[:id] = id
       end
 
+      opts.on("--order [ORDER]", "The order by constraint for the search") do |order|
+        options[:order] = order
+      end
+
       opts.on("--environment [ENV]", "The database environment") do |env|
         options[:environment] = env
       end
@@ -55,5 +59,4 @@ class ParseArguments
     end
     errors
   end
-
 end

@@ -26,7 +26,7 @@ class Movie
     success
   end
 
-  def self.find_movie name
+  def self.find name
     database = Environment.database_connection
     database.results_as_hash = true
     results = database.execute "SELECT * FROM movies WHERE CAST(title AS VARCHAR)='#{name}'"
@@ -37,6 +37,28 @@ class Movie
       movie
     else
       nil
+    end
+  end
+
+  def self.all order
+    database = Environment.database_connection
+    database.results_as_hash = true
+    if order and ["movieID", "title", "year", "length", "budget", "mpaa", "genreID", "aggregateRating", "totalReviews"].include?(order)
+      orderby = "#{order}"
+    else
+      orderby = "title"
+    end
+
+    if ["aggregateRating", "budget", "totalReviews"].include?(orderby)
+      results = database.execute("SELECT * FROM movies ORDER BY #{orderby} DESC")
+    else
+      results = database.execute("SELECT * FROM movies ORDER BY #{orderby} ASC")
+    end
+
+    results.map do |row_hash|
+      movie = Movie.new(name: row_hash["title"], year: row_hash["year"], length: row_hash["length"], budget: row_hash["budget"], mpaa: row_hash["mpaa"], genre: row_hash["genreID"], aggregateRating: row_hash["aggregateRating"], totalReviews: row_hash["totalReviews"])      
+      movie.send("id=", row_hash["movieID"])
+      formatted_movie = "[#{movie.id}] | #{movie.name} | #{movie.aggregateRating} | #{movie.totalReviews} | #{movie.year} | #{movie.length} | #{movie.budget} | #{movie.genre} | #{movie.mpaa}"
     end
   end
 

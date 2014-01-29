@@ -2,6 +2,7 @@
 require_relative 'lib/environment'
 require_relative 'lib/parse_arguments'
 require 'pry'
+require 'hirb'
 
 command = ARGV[0]
 category = ARGV[1]
@@ -12,13 +13,17 @@ Environment.environment = options[:environment] || "production"
 database = Environment.database_connection
 
 if command == "search"
-  found_movie = Movie.find_movie(options[:name])
+  found_movie = Movie.find(options[:name])
   if found_movie.nil?
     formatted_result = "No movie found with title '#{options[:name]}'. Would you like to create one? Just use the command 'movie create'."
   else
     formatted_result = "#{options[:name]} (#{found_movie.aggregateRating} review score): a #{found_movie.genre} released in #{found_movie.year}, it has a length of #{found_movie.length} minutes, a budget of $#{found_movie.budget}, and is rated #{found_movie.mpaa}."
   end
   puts formatted_result
+elsif command == "list"
+  puts "[ID] | NAME | AGGREGATE RATING | TOTAL REVIEWS | YEAR | LENGTH | BUDGET | GENRE | MPAA"
+  Hirb::View.enable
+  Hirb::View.capture_and_render { puts Movie.all(options[:order]) }
 else
   error_messages = ParseArguments.validate(options,category)
   if error_messages.empty?

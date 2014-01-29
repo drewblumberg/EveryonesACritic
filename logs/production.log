@@ -10,3 +10,17 @@ I, [2014-01-28T10:35:57.068471 #16272]  INFO -- : Executing: SELECT * FROM movie
 I, [2014-01-28T10:36:11.627663 #16365]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Green Mile The'
 I, [2014-01-28T10:49:43.329784 #16628]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Green Mile Thesdfsdf'
 I, [2014-01-28T10:54:24.645073 #16865]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Green Mile Thesdfsdf'
+I, [2014-01-28T13:28:43.380509 #20707]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-01-28T13:29:15.109754 #20896]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-01-28T13:30:45.180456 #21008]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-01-28T13:33:09.238035 #21219]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-01-28T13:37:15.566005 #21450]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-01-28T13:39:04.367860 #21740]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-01-28T13:43:41.485814 #21895]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-01-28T13:44:03.305332 #21991]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-01-28T13:50:03.457600 #22244]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-01-28T14:10:03.524996 #23197]  INFO -- : Executing: SELECT * FROM movies ORDER BY aggregateRating ASC
+I, [2014-01-28T14:17:22.326873 #23465]  INFO -- : Executing: SELECT * FROM movies ORDER BY aggregateRating DESC
+I, [2014-01-29T14:37:26.672976 #24593]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-01-29T14:37:46.398943 #24781]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-01-29T14:38:12.994887 #24972]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC

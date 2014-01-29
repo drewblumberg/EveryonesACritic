@@ -8,6 +8,11 @@ class MovieTest < MiniTest::Unit::TestCase
     assert_equal expected, actual
   end
 
+  def assert_command_output_includes expected, command
+    actual = `#{command}`.strip
+    assert_includes actual, expected
+  end
+
   def database
     Environment.environment = "test"
     Environment.database_connection
