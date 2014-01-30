@@ -46,3 +46,7 @@ I, [2014-01-30T10:35:38.652505 #31161]  INFO -- : Executing: SELECT * FROM movie
 I, [2014-01-30T10:35:38.678986 #31161]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%sdfghjvbnghjk%'
 I, [2014-01-30T10:35:44.659874 #31253]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix'
 I, [2014-01-30T10:35:44.701087 #31253]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Matrix%'
+I, [2014-01-30T10:46:02.435657 #33178]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix'
+I, [2014-01-30T10:46:02.462056 #33178]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Matrix%'
+I, [2014-01-30T10:46:51.651173 #33277]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='matrix'
+I, [2014-01-30T10:46:51.677794 #33277]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%matrix%'

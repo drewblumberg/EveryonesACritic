@@ -26,4 +26,20 @@ class TestMovie < MovieTest
     assert_equal movie.name, found.name
     assert_equal movie.id, found.id
   end
+
+  def test_equality_on_same_object
+    movie = Movie.create(name: "Anchorman2", genre: 4, year: 2013, length: 100, budget: 20000000, mpaa: "R")
+    assert movie == movie
+  end
+
+  def test_equality_with_different_class
+    movie = Movie.create(name: "Anchorman2", genre: 4, year: 2013, length: 100, budget: 20000000, mpaa: "R")
+    refute movie == "Movie"
+  end
+
+  def test_equality_with_different_movie
+    movie1 = Movie.create(name: "Anchorman2", genre: 4, year: 2013, length: 100, budget: 20000000, mpaa: "R")
+    movie2 = Movie.create(name: "Anchorman3", genre: 4, year: 2013, length: 100, budget: 20000000, mpaa: "R")
+    refute movie1 == movie2
+  end
 end
