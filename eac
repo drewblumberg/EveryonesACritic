@@ -29,6 +29,20 @@ elsif command == "list"
   puts "[ID] | NAME | AGGREGATE RATING | TOTAL REVIEWS | YEAR | LENGTH | BUDGET | GENRE | MPAA"
   Hirb::View.enable
   Hirb::View.capture_and_render { puts Movie.all(options[:order]) }
+elsif command == "delete"
+  found_movie = Movie.find(options[:name])
+  if found_movie.nil?
+    similar = Movie.find_similar(options[:name])
+    formatted_result = "No movie found."
+  else
+    found_movie.delete
+    formatted_result = "The movie \"#{options[:name]}\" has been deleted from the database."
+  end
+  puts formatted_result
+  if similar and similar[0]
+    puts "Did you mean: "
+    puts similar.join(", ")
+  end
 else
   error_messages = ParseArguments.validate(options,category)
   if error_messages.empty?

@@ -27,6 +27,14 @@ class TestMovie < MovieTest
     assert_equal movie.id, found.id
   end
 
+  def test_delete_deletes_a_movie
+    movie = Movie.create(name: "Anchorman2", genre: 4, year: 2013, length: 100, budget: 20000000, mpaa: "R")
+    movies_before = database.execute("SELECT COUNT(movieID) from movies")[0][0]
+    movie.delete
+    movies_after = database.execute("SELECT COUNT(movieID) from movies")[0][0]
+    assert_equal movies_before - 1, movies_after
+  end
+
   def test_equality_on_same_object
     movie = Movie.create(name: "Anchorman2", genre: 4, year: 2013, length: 100, budget: 20000000, mpaa: "R")
     assert movie == movie

@@ -32,6 +32,11 @@ class Movie
     success
   end
 
+  def delete
+    db = Environment.database_connection
+    db.execute "DELETE FROM movies WHERE CAST(title AS varchar)='#{@name}'"
+  end
+
   def self.find name
     database = Environment.database_connection
     database.results_as_hash = true

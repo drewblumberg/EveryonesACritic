@@ -1,6 +1,5 @@
 require_relative 'helper'
 require_relative '../lib/environment'
-require 'sqlite3'
 
 class TestEnteringMovies < MovieTest
   def test_valid_movie_information_gets_printed

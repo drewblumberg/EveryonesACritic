@@ -50,3 +50,5 @@ I, [2014-01-30T10:46:02.435657 #33178]  INFO -- : Executing: SELECT * FROM movie
 I, [2014-01-30T10:46:02.462056 #33178]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Matrix%'
 I, [2014-01-30T10:46:51.651173 #33277]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='matrix'
 I, [2014-01-30T10:46:51.677794 #33277]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%matrix%'
+I, [2014-01-30T11:35:19.075207 #36130]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Anchorman2'
+I, [2014-01-30T11:35:19.103142 #36130]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Anchorman2%'
