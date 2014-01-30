@@ -10,6 +10,12 @@ class Movie
     end
   end
 
+  def self.create(attributes = {})
+    movie = Movie.new(attributes)
+    movie.save
+    movie
+  end
+
   def save
     db = Environment.database_connection
     movie_row = db.execute "SELECT * FROM movies WHERE CAST(title AS varchar)='#{@name}'"
