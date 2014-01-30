@@ -466,3 +466,47 @@ I, [2014-01-30T09:59:27.242613 #28439]  INFO -- : Executing: SELECT * FROM movie
 I, [2014-01-30T09:59:27.288989 #28361]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
 I, [2014-01-30T09:59:27.665435 #28444]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='asdfghjasdfghj'
 I, [2014-01-30T09:59:27.709961 #28361]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:36.994970 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:37.021999 #28944]  INFO -- : Executing: SELECT COUNT(*) FROM movies
+I, [2014-01-30T10:03:37.375700 #28954]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar)='Anchorman2'
+I, [2014-01-30T10:03:37.402505 #28954]  INFO -- : Executing: SELECT COUNT(*) FROM movies
+I, [2014-01-30T10:03:37.403911 #28954]  INFO -- : Executing: INSERT INTO movies(movieID,title,year,length,budget,aggregateRating,totalReviews,mpaa,genreID) VALUES (58788,'Anchorman2',2013,100,20000000,NULL,NULL,'R',4)
+I, [2014-01-30T10:03:37.425426 #28944]  INFO -- : Executing: SELECT title,year,length,budget,mpaa FROM movies WHERE title='Anchorman2'
+I, [2014-01-30T10:03:37.450211 #28944]  INFO -- : Executing: SELECT COUNT(*) FROM movies
+I, [2014-01-30T10:03:37.451614 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:37.474695 #28944]  INFO -- : Executing: DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:37.847205 #28959]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar)='Anchorman2'
+I, [2014-01-30T10:03:37.873975 #28959]  INFO -- : Executing: SELECT COUNT(*) FROM movies
+I, [2014-01-30T10:03:37.875319 #28959]  INFO -- : Executing: INSERT INTO movies(movieID,title,year,length,budget,aggregateRating,totalReviews,mpaa,genreID) VALUES (58788,'Anchorman2',2013,100,20000000,NULL,NULL,'R',4)
+I, [2014-01-30T10:03:38.245081 #28964]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar)='Anchorman2'
+I, [2014-01-30T10:03:38.289996 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:38.315664 #28944]  INFO -- : Executing: DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:38.771364 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:39.164265 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:39.555682 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:39.960264 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:40.333327 #28990]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar)='Anchorman2'
+I, [2014-01-30T10:03:40.360314 #28990]  INFO -- : Executing: SELECT COUNT(*) FROM movies
+I, [2014-01-30T10:03:40.361637 #28990]  INFO -- : Executing: INSERT INTO movies(movieID,title,year,length,budget,aggregateRating,totalReviews,mpaa,genreID) VALUES (58788,'Anchorman2',2013,100,20000000,NULL,NULL,'R',4)
+I, [2014-01-30T10:03:40.384257 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:40.409167 #28944]  INFO -- : Executing: DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:40.431357 #28944]  INFO -- : Executing: SELECT COUNT(*) FROM movies
+I, [2014-01-30T10:03:40.797631 #28944]  INFO -- : Executing: SELECT COUNT(*) FROM movies
+I, [2014-01-30T10:03:40.798540 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:41.189307 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:41.214147 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar)='Anchorman2'
+I, [2014-01-30T10:03:41.237376 #28944]  INFO -- : Executing: SELECT COUNT(*) FROM movies
+I, [2014-01-30T10:03:41.239055 #28944]  INFO -- : Executing: INSERT INTO movies(movieID,title,year,length,budget,aggregateRating,totalReviews,mpaa,genreID) VALUES (58788,'Anchorman2',2013,100,20000000,NULL,NULL,'R',4)
+I, [2014-01-30T10:03:41.242700 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:41.266103 #28944]  INFO -- : Executing: DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:41.289064 #28944]  INFO -- : Executing: SELECT COUNT(movieID) from movies
+I, [2014-01-30T10:03:41.305449 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar)='Anchorman2'
+I, [2014-01-30T10:03:41.329001 #28944]  INFO -- : Executing: SELECT COUNT(*) FROM movies
+I, [2014-01-30T10:03:41.330337 #28944]  INFO -- : Executing: INSERT INTO movies(movieID,title,year,length,budget,aggregateRating,totalReviews,mpaa,genreID) VALUES (58788,'Anchorman2',2013,100,20000000,NULL,NULL,'R',4)
+I, [2014-01-30T10:03:41.332768 #28944]  INFO -- : Executing: SELECT COUNT(movieID) from movies
+I, [2014-01-30T10:03:41.348285 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:41.371701 #28944]  INFO -- : Executing: DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:41.742241 #29005]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'
+I, [2014-01-30T10:03:41.786322 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
+I, [2014-01-30T10:03:42.159564 #29010]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='asdfghjasdfghj'
+I, [2014-01-30T10:03:42.204424 #28944]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
