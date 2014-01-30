@@ -29,3 +29,20 @@ I, [2014-01-29T14:54:11.485414 #25803]  INFO -- : Executing: SELECT * FROM movie
 I, [2014-01-29T14:54:18.901435 #25812]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
 I, [2014-01-30T09:59:12.789198 #28423]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
 I, [2014-01-30T09:59:20.043143 #28430]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-01-30T10:24:36.507852 #30209]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix'
+I, [2014-01-30T10:24:55.518591 #30305]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix'
+I, [2014-01-30T10:24:55.545208 #30305]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Matrix%'
+I, [2014-01-30T10:28:05.762507 #30436]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix'
+I, [2014-01-30T10:28:53.032800 #30537]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix'
+I, [2014-01-30T10:29:09.074825 #30630]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix'
+I, [2014-01-30T10:29:09.104052 #30630]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Matrix%'
+I, [2014-01-30T10:29:46.141157 #30730]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix'
+I, [2014-01-30T10:29:46.169802 #30730]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Matrix%'
+I, [2014-01-30T10:30:00.944062 #30910]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix'
+I, [2014-01-30T10:30:00.971121 #30910]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Matrix%'
+I, [2014-01-30T10:35:17.631295 #31066]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='sdfghjvbnghjk'
+I, [2014-01-30T10:35:17.661335 #31066]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%sdfghjvbnghjk%'
+I, [2014-01-30T10:35:38.652505 #31161]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='sdfghjvbnghjk'
+I, [2014-01-30T10:35:38.678986 #31161]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%sdfghjvbnghjk%'
+I, [2014-01-30T10:35:44.659874 #31253]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix'
+I, [2014-01-30T10:35:44.701087 #31253]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Matrix%'

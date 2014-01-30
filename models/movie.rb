@@ -46,6 +46,17 @@ class Movie
     end
   end
 
+  def self.find_similar name
+    database = Environment.database_connection
+    database.results_as_hash = true
+    similar = database.execute "SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%#{name}%'"
+    similar_titles = []
+    similar.each do |movie|
+      similar_titles << movie["title"]
+    end
+    similar_titles
+  end
+
   def self.all order
     database = Environment.database_connection
     database.results_as_hash = true

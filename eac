@@ -15,11 +15,16 @@ database = Environment.database_connection
 if command == "search"
   found_movie = Movie.find(options[:name])
   if found_movie.nil?
+    similar = Movie.find_similar(options[:name])
     formatted_result = "No movie found with title '#{options[:name]}'. Would you like to create one? Just use the command 'movie create'."
   else
     formatted_result = "#{options[:name]} (#{found_movie.aggregateRating} review score): a #{found_movie.genre} released in #{found_movie.year}, it has a length of #{found_movie.length} minutes, a budget of $#{found_movie.budget}, and is rated #{found_movie.mpaa}."
   end
   puts formatted_result
+  if similar and similar[0]
+    puts "Did you mean: "
+    puts similar.join(", ")
+  end
 elsif command == "list"
   puts "[ID] | NAME | AGGREGATE RATING | TOTAL REVIEWS | YEAR | LENGTH | BUDGET | GENRE | MPAA"
   Hirb::View.enable
