@@ -31,6 +31,10 @@ class ParseArguments
         options[:id] = id
       end
 
+      opts.on("--name [NAME]", "The name of the object we are editing") do |name|
+        options[:name] = name
+      end
+
       opts.on("--order [ORDER]", "The order by constraint for the search") do |order|
         options[:order] = order
       end

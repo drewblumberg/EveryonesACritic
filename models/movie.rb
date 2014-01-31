@@ -5,9 +5,7 @@ class Movie
   attr_reader :id
 
   def initialize attributes = {}
-    [:name, :year, :length, :budget, :mpaa, :genre, :aggregateRating, :totalReviews].each do |attr|
-      self.send("#{attr}=", attributes[attr])
-    end
+    update_attributes(attributes)
   end
 
   def self.create(attributes = {})
@@ -18,15 +16,21 @@ class Movie
 
   def save
     db = Environment.database_connection
-    movie_row = db.execute "SELECT * FROM movies WHERE CAST(title AS varchar)='#{@name}'"
 
-    if movie_row.length == 0
-      totalMovieIDs = db.execute "SELECT COUNT(*) FROM movies"
-      @id ||= totalMovieIDs[0][0] + 1
-      db.execute "INSERT INTO movies(movieID,title,year,length,budget,aggregateRating,totalReviews,mpaa,genreID) VALUES (#{@id},'#{name}',#{year},#{length},#{budget},NULL,NULL,'#{mpaa}',#{genre})"
+    if id
+      db.execute "UPDATE movies SET title = '#{name}', year = #{year}, length = #{length}, budget = #{budget}, mpaa = '#{mpaa}', genreID = #{genre} WHERE CAST(movieID AS INTEGER)=#{id}"
       success = true
     else
-      success = false
+      movie_row = db.execute "SELECT * FROM movies WHERE CAST(title AS varchar)='#{@name}'"
+
+      if movie_row.length == 0
+        totalMovieIDs = db.execute "SELECT COUNT(*) FROM movies"
+        @id ||= totalMovieIDs[0][0] + 1
+        db.execute "INSERT INTO movies(movieID,title,year,length,budget,aggregateRating,totalReviews,mpaa,genreID) VALUES (#{@id},'#{name}',#{year},#{length},#{budget},NULL,NULL,'#{mpaa}',#{genre})"
+        success = true
+      else
+        success = false
+      end
     end
 
     success
@@ -50,6 +54,21 @@ class Movie
       nil
     end
   end
+
+  def self.find_by_id id
+    database = Environment.database_connection
+    database.results_as_hash = true
+    results = database.execute "SELECT * FROM movies WHERE CAST(movies.movieID AS INTEGER)=#{id}"
+    result = results[0]
+    if result
+      movie = Movie.new(name: result["title"], year: result["year"], length: result["length"], budget: result["budget"], mpaa: result["mpaa"], genre: result["genreID"], aggregateRating: result["aggregateRating"], totalReviews: result["totalReviews"])
+      movie.send("id=", result["movieID"])
+      movie
+    else
+      nil
+    end
+  end
+
 
   def self.find_similar name
     database = Environment.database_connection
@@ -84,9 +103,22 @@ class Movie
     end
   end
 
+  def update attributes = {}
+    update_attributes(attributes)
+    save
+  end
+
   protected
 
   def id=(id)
     @id = id
+  end
+
+  def update_attributes(attributes)
+    [:name, :year, :length, :budget, :mpaa, :genre, :aggregateRating, :totalReviews].each do |attr|
+      if attributes[attr]
+        self.send("#{attr}=", attributes[attr])
+      end
+    end
   end
 end

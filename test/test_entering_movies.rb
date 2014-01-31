@@ -14,7 +14,7 @@ class TestEnteringMovies < MovieTest
 
     `./eac create movie Anchorman2 --genre 4 --year 2013 --length 100 --budget 20000000 --mpaa R --environment test`
     results = database.execute "SELECT title,year,length,budget,mpaa FROM movies WHERE title='Anchorman2'"
-    expected = ["Anchorman2", 2013, 100, 20000000, "R"]
+    expected = {"title"=>"Anchorman2", "year"=>2013, "length"=>100, "budget"=>20000000, "mpaa"=>"R", 0=>"Anchorman2", 1=>2013, 2=>100, 3=>20000000, 4=>"R"}
     assert_equal expected, results[0]
 
     result = database.execute "SELECT COUNT(*) FROM movies"

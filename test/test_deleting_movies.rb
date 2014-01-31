@@ -7,4 +7,10 @@ class TestDeletingMovies < MovieTest
     expected = 'The movie "Anchorman2" has been deleted from the database.'
     assert_command_output expected, command
   end
+
+  def test_delete_movie_returns_similar
+    command = './eac delete movie "Matrix" --environment test'
+    expected = "No movie found.\nDid you mean: \nAnimatrix: Final Flight of the Osiris The, Matrix Reloaded The, Matrix Revolutions The, Matrix The, Sex Files: Sexual Matrix, That 70s Matrix"
+    assert_command_output expected, command
+  end
 end

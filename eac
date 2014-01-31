@@ -43,6 +43,13 @@ elsif command == "delete"
     puts "Did you mean: "
     puts similar.join(", ")
   end
+elsif command == "edit"
+  if movie = Movie.find_by_id(options[:id])
+    movie.update(options)
+    puts "A #{category} was updated and is now titled #{movie.name} with genre #{movie.genre}, year #{movie.year}, length #{movie.length}, budget #{movie.budget}, and mpaa #{movie.mpaa} was created."
+  else
+    puts "Movie #{options[:id]} couldn't be found."
+  end
 else
   error_messages = ParseArguments.validate(options,category)
   if error_messages.empty?
