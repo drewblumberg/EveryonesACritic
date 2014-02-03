@@ -35,6 +35,24 @@ class TestMovie < MovieTest
     assert_equal movies_before - 1, movies_after
   end
 
+  def test_update_doesnt_insert_new_row
+    movie = Movie.create(name: "Anchorman2", genre: 4, year: 2013, length: 100, budget: 20000000, mpaa: "R")
+    movies_before = database.execute("SELECT COUNT(movieID) from movies")[0][0]
+    movie.update(name: "Anchorman3")
+    movies_after = database.execute("SELECT COUNT(movieID) from movies")[0][0]
+    assert_equal movies_before, movies_after
+  end
+
+  def test_update_saves_to_the_database
+    movie = Movie.create(name: "Anchorman2", genre: 4, year: 2013, length: 100, budget: 20000000, mpaa: "R")
+    id = movie.id
+    movie.update(name: "Anchorman3")
+    updated_purchase = Movie.find_by_id(id)
+    expected = ["Anchorman3"]
+    actual = [ updated_purchase.name ]
+    assert_equal expected, actual
+  end
+
   def test_equality_on_same_object
     movie = Movie.create(name: "Anchorman2", genre: 4, year: 2013, length: 100, budget: 20000000, mpaa: "R")
     assert movie == movie
