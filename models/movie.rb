@@ -1,3 +1,4 @@
+require_relative 'genre'
 require 'pry'
 
 class Movie
@@ -16,17 +17,23 @@ class Movie
 
   def save
     db = Environment.database_connection
+    unless genre.is_a? Integer
+      genre_obj = Genre.new(genre) 
+      genreID = genre_obj.parse_id
+    else
+      genreID = genre
+    end
 
     if id
-      db.execute "UPDATE movies SET title = '#{name}', year = #{year}, length = #{length}, budget = #{budget}, mpaa = '#{mpaa}', genreID = #{genre} WHERE CAST(movieID AS INTEGER)=#{id}"
+      db.execute "UPDATE movies SET title = '#{name}', year = #{year}, length = #{length}, budget = #{budget}, mpaa = '#{mpaa}', genreID = #{genreID} WHERE CAST(movieID AS INTEGER)=#{id}"
       success = true
     else
-      movie_row = db.execute "SELECT * FROM movies WHERE CAST(title AS varchar)='#{@name}'"
+      movie_row = db.execute "SELECT * FROM movies WHERE CAST(title AS varchar)='#{name}'"
 
       if movie_row.length == 0
         totalMovieIDs = db.execute "SELECT COUNT(*) FROM movies"
         @id ||= totalMovieIDs[0][0] + 1
-        db.execute "INSERT INTO movies(movieID,title,year,length,budget,aggregateRating,totalReviews,mpaa,genreID) VALUES (#{@id},'#{name}',#{year},#{length},#{budget},NULL,NULL,'#{mpaa}',#{genre})"
+        db.execute "INSERT INTO movies(movieID,title,year,length,budget,aggregateRating,totalReviews,mpaa,genreID) VALUES (#{@id},'#{name}',#{year},#{length},#{budget},NULL,NULL,'#{mpaa}',#{genreID})"
         success = true
       else
         success = false
@@ -48,6 +55,7 @@ class Movie
     result = results[0]
     if result
       movie = Movie.new(name: result["title"], year: result["year"], length: result["length"], budget: result["budget"], mpaa: result["mpaa"], genre: result["genreID"], aggregateRating: result["aggregateRating"], totalReviews: result["totalReviews"])
+      genre_obj = Genre.new(movie.genre)
       movie.send("id=", result["movieID"])
       movie
     else
@@ -99,7 +107,8 @@ class Movie
     results.map do |row_hash|
       movie = Movie.new(name: row_hash["title"], year: row_hash["year"], length: row_hash["length"], budget: row_hash["budget"], mpaa: row_hash["mpaa"], genre: row_hash["genreID"], aggregateRating: row_hash["aggregateRating"], totalReviews: row_hash["totalReviews"])      
       movie.send("id=", row_hash["movieID"])
-      formatted_movie = "[#{movie.id}] | #{movie.name} | #{movie.aggregateRating} | #{movie.totalReviews} | #{movie.year} | #{movie.length} | #{movie.budget} | #{movie.genre} | #{movie.mpaa}"
+      genre_name = Genre.parse_name(movie.genre)
+      formatted_movie = "[#{movie.id}] | #{movie.name} | #{movie.aggregateRating} | #{movie.totalReviews} | #{movie.year} | #{movie.length} | #{movie.budget} | #{genre_name} | #{movie.mpaa}"
     end
   end
 
@@ -117,7 +126,12 @@ class Movie
   def update_attributes(attributes)
     [:name, :year, :length, :budget, :mpaa, :genre, :aggregateRating, :totalReviews].each do |attr|
       if attributes[attr]
-        self.send("#{attr}=", attributes[attr])
+        if attr == :genre and !attributes[attr].is_a? Integer
+          updated_genre = Genre.new(attributes[:genre])
+          self.send("#{attr}=", updated_genre.parse_id)
+        else
+          self.send("#{attr}=", attributes[attr])
+        end
       end
     end
   end

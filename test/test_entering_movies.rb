@@ -3,8 +3,8 @@ require_relative '../lib/environment'
 
 class TestEnteringMovies < MovieTest
   def test_valid_movie_information_gets_printed
-    command = "./eac create movie Anchorman2 --genre 4 --year 2013 --length 100 --budget 20000000 --mpaa R --environment test"
-    expected = "A movie titled Anchorman2 with genre 4, year 2013, length 100, budget 20000000, and mpaa R was created."
+    command = "./eac create movie Anchorman2 --genre comedy --year 2013 --length 100 --budget 20000000 --mpaa R --environment test"
+    expected = "A movie titled Anchorman2 with genre comedy, year 2013, length 100, budget 20000000, and mpaa R was created."
     assert_command_output expected, command
   end
 
@@ -12,7 +12,7 @@ class TestEnteringMovies < MovieTest
     # Current movie numbers
     orig_movies = database.execute "SELECT COUNT(*) FROM movies"
 
-    `./eac create movie Anchorman2 --genre 4 --year 2013 --length 100 --budget 20000000 --mpaa R --environment test`
+    `./eac create movie Anchorman2 --genre comedy --year 2013 --length 100 --budget 20000000 --mpaa R --environment test`
     results = database.execute "SELECT title,year,length,budget,mpaa FROM movies WHERE title='Anchorman2'"
     expected = {"title"=>"Anchorman2", "year"=>2013, "length"=>100, "budget"=>20000000, "mpaa"=>"R", 0=>"Anchorman2", 1=>2013, 2=>100, 3=>20000000, 4=>"R"}
     assert_equal expected, results[0]
@@ -40,25 +40,25 @@ class TestEnteringMovies < MovieTest
   end
 
   def test_error_message_for_missing_year
-    command = "./eac create movie Anchorman2 --genre 4 --length 100 --budget 20000000 --mpaa R --environment test"
+    command = "./eac create movie Anchorman2 --genre 'comedy' --length 100 --budget 20000000 --mpaa R --environment test"
     expected = "You must provide the year of the movie you are adding."
     assert_command_output expected, command
   end
 
   def test_error_message_for_missing_length
-    command = "./eac create movie Anchorman2 --genre 4 --year 2013 --budget 20000000 --mpaa R --environment test"
+    command = "./eac create movie Anchorman2 --genre 'comedy' --year 2013 --budget 20000000 --mpaa R --environment test"
     expected = "You must provide the length of the movie you are adding."
     assert_command_output expected, command
   end
 
   def test_error_message_for_missing_budget
-    command = "./eac create movie Anchorman2 --year 2013 --length 100 --genre 4 --mpaa R --environment test"
+    command = "./eac create movie Anchorman2 --year 2013 --length 100 --genre 'comedy' --mpaa R --environment test"
     expected = "You must provide the budget of the movie you are adding."
     assert_command_output expected, command
   end
 
   def test_error_message_for_missing_mpaa
-    command = "./eac create movie Anchorman2 --year 2013 --length 100 --budget 20000000 --genre 4 --environment test"
+    command = "./eac create movie Anchorman2 --year 2013 --length 100 --budget 20000000 --genre 'comedy' --environment test"
     expected = "You must provide the mpaa of the movie you are adding."
     assert_command_output expected, command
   end
@@ -70,9 +70,15 @@ class TestEnteringMovies < MovieTest
   end
 
   def test_duplicate_movies_cannot_be_created
-    `./eac create movie Anchorman2 --genre 4 --year 2013 --length 100 --budget 20000000 --mpaa R --environment test`
-    command = "./eac create movie Anchorman2 --genre 4 --year 2013 --length 100 --budget 20000000 --mpaa R --environment test"
+    `./eac create movie Anchorman2 --genre "comedy" --year 2013 --length 100 --budget 20000000 --mpaa R --environment test`
+    command = "./eac create movie Anchorman2 --genre 'comedy' --year 2013 --length 100 --budget 20000000 --mpaa R --environment test"
     expected = "A movie titled Anchorman2 has already been created."
+    assert_command_output expected, command
+  end
+
+  def test_command_not_recognized
+    command = "./eac badcommand Anchorman2 --genre 'comedy' --year 2013 --length 100 --budget 20000000 --mpaa R --environment test"
+    expected = "Command not recognized. Try create, search, edit, list, or delete."
     assert_command_output expected, command
   end
 

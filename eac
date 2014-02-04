@@ -18,7 +18,8 @@ if command == "search"
     similar = Movie.find_similar(options[:name])
     formatted_result = "No movie found with title '#{options[:name]}'. Would you like to create one? Just use the command 'movie create'."
   else
-    formatted_result = "#{options[:name]} (#{found_movie.aggregateRating} review score): a #{found_movie.genre} released in #{found_movie.year}, it has a length of #{found_movie.length} minutes, a budget of $#{found_movie.budget}, and is rated #{found_movie.mpaa}."
+    genre = Genre.parse_name(found_movie.genre)
+    formatted_result = "#{options[:name]} (#{found_movie.aggregateRating} review score): #{genre} film released in #{found_movie.year}, it has a length of #{found_movie.length} minutes, a budget of $#{found_movie.budget}, and is rated #{found_movie.mpaa}."
   end
   puts formatted_result
   if similar and similar[0]
@@ -46,21 +47,25 @@ elsif command == "delete"
 elsif command == "edit"
   if movie = Movie.find_by_id(options[:id])
     movie.update(options)
-    puts "A #{category} was updated and is now titled #{movie.name} with genre #{movie.genre}, year #{movie.year}, length #{movie.length}, budget #{movie.budget}, and mpaa #{movie.mpaa} was created."
+    genre = Genre.parse_name(movie.genre)
+    puts "A #{category} was updated and is now titled #{movie.name} with genre #{genre}, year #{movie.year}, length #{movie.length}, budget #{movie.budget}, and mpaa #{movie.mpaa} was created."
   else
     puts "Movie #{options[:id]} couldn't be found."
   end
-else
+elsif command == "create"
   error_messages = ParseArguments.validate(options,category)
   if error_messages.empty?
     movie = Movie.new(options)
     success = movie.save
     if success
-      puts "A #{category} titled #{movie.name} with genre #{movie.genre}, year #{movie.year}, length #{movie.length}, budget #{movie.budget}, and mpaa #{movie.mpaa} was created."
+      genre = Genre.parse_name(movie.genre)
+      puts "A #{category} titled #{movie.name} with genre #{genre}, year #{movie.year}, length #{movie.length}, budget #{movie.budget}, and mpaa #{movie.mpaa} was created."
     else
       puts "A #{category} titled #{options[:name]} has already been created."
     end
   else
     puts error_messages
   end
+else
+  puts "Command not recognized. Try create, search, edit, list, or delete."
 end
