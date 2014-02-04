@@ -28,8 +28,16 @@ if category == "movie"
       puts similar.join(", ")
     end
   elsif command == "list"
+    constraints = [:aggregateRating, :totalReviews, :year, :length, :budget, :mpaa]
+    constraint = []
+    constraints.each do |con|
+      if options[con]
+        constraint << con
+        constraint << options[con]
+      end
+    end
     Hirb::View.enable
-    Hirb::View.capture_and_render { puts "[ID] | NAME | AGGREGATE RATING | TOTAL REVIEWS | YEAR | LENGTH | BUDGET | GENRE | MPAA";puts Movie.all(options[:order]) }
+    Hirb::View.capture_and_render { puts "[ID] | NAME | AGGREGATE RATING | TOTAL REVIEWS | YEAR | LENGTH | BUDGET | GENRE | MPAA";puts Movie.all(options[:order], constraint[0], constraint[1]) }
   elsif command == "delete"
     found_movie = Movie.find(options[:name])
     if found_movie.nil?

@@ -90,7 +90,7 @@ class Movie
     similar_titles
   end
 
-  def self.all order
+  def self.all order, constraint = nil, value = nil
     database = Environment.database_connection
     database.results_as_hash = true
     if order and ["movieID", "title", "year", "length", "budget", "mpaa", "genreID", "aggregateRating", "totalReviews"].include?(order)
@@ -99,11 +99,25 @@ class Movie
       orderby = "title"
     end
 
-    if ["aggregateRating", "budget", "totalReviews"].include?(orderby)
-      results = database.execute("SELECT * FROM movies ORDER BY #{orderby} DESC")
-    else
-      results = database.execute("SELECT * FROM movies ORDER BY #{orderby} ASC")
+    results = "SELECT * FROM movies"
+
+    unless constraint.nil?
+      if ['year', 'length', 'budget', 'aggregateRating', 'totalReviews'].include?(constraint)
+        results << " WHERE CAST(#{constraint} AS INTEGER)= #{value}"
+      elsif ['title', 'mpaa']
+        results << " WHERE CAST(#{constraint} AS VARCHAR)= '#{value}'"
+      else
+        results << ""
+      end
     end
+
+    if ["aggregateRating", "budget", "totalReviews"].include?(orderby)
+      results << " ORDER BY #{orderby} DESC"
+    else
+      results << " ORDER BY #{orderby} ASC"
+    end
+
+    results = database.execute results
 
     results.map do |row_hash|
       movie = Movie.new(name: row_hash["title"], year: row_hash["year"], length: row_hash["length"], budget: row_hash["budget"], mpaa: row_hash["mpaa"], genre: row_hash["genreID"], aggregateRating: row_hash["aggregateRating"], totalReviews: row_hash["totalReviews"])      

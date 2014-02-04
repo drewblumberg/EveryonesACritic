@@ -76,3 +76,11 @@ I, [2014-02-03T23:34:55.226157 #92089]  INFO -- : Executing: SELECT * FROM revie
 I, [2014-02-03T23:37:56.196274 #92305]  INFO -- : Executing: SELECT * FROM reviews INNER JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='Matrix The'
 I, [2014-02-04T00:23:48.591312 #97232]  INFO -- : Executing: SELECT * FROM reviews INNER JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='Matrix The'
 I, [2014-02-04T00:23:48.622469 #97232]  INFO -- : Executing: DELETE FROM reviews WHERE CAST(reviewID AS INTEGER)= 1
+I, [2014-02-04T00:53:41.700271 #99210]  INFO -- : Executing: SELECT * FROM movies ORDER BY year ASC
+I, [2014-02-04T00:54:42.016647 #99495]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(year AS VARCHAR)= 2000 ORDER BY aggregateRating DESC
+I, [2014-02-04T00:57:30.549481 #99712]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'
+I, [2014-02-04T00:58:23.075666 #99813]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(mpaa AS VARCHAR)= R ORDER BY title ASC
+I, [2014-02-04T00:58:51.156625 #99912]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(mpaa AS VARCHAR)= R ORDER BY aggregateRating DESC
+I, [2014-02-04T01:00:57.685803 #131]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(mpaa AS VARCHAR)= R ORDER BY aggregateRating DESC
+I, [2014-02-04T01:01:06.973231 #371]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(mpaa AS VARCHAR)= 'R' ORDER BY aggregateRating DESC
+I, [2014-02-04T01:01:20.409976 #579]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(mpaa AS VARCHAR)= 'R' ORDER BY aggregateRating DESC

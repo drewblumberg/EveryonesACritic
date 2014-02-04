@@ -11688,3 +11688,4 @@ I, [2014-02-04T00:26:29.528862 #98154]  INFO -- : Executing: SELECT * FROM revie
 I, [2014-02-04T00:26:29.587751 #97968]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'
 I, [2014-02-04T00:26:29.612508 #97968]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman3'
 I, [2014-02-04T00:26:29.636886 #97968]  INFO -- : Executing: DELETE FROM reviews
+I, [2014-02-04T00:59:32.781582 #88792]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(mpaa AS VARCHAR)='R'

@@ -43,6 +43,14 @@ class ParseArguments
         options[:review] = review
       end
 
+      opts.on("--aggregateRating [AGGREGATERATING]", 'The aggregate score of the movie') do |agr|
+        options[:aggregateRating] = agr
+      end
+
+      opts.on("--totalReviews [TOTALREVIEWS]", 'The total reveiws of the movie') do |total|
+        options[:review] = total
+      end
+
       opts.on("--environment [ENV]", "The database environment") do |env|
         options[:environment] = env
       end
