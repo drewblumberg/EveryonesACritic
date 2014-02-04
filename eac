@@ -27,9 +27,8 @@ if command == "search"
     puts similar.join(", ")
   end
 elsif command == "list"
-  puts "[ID] | NAME | AGGREGATE RATING | TOTAL REVIEWS | YEAR | LENGTH | BUDGET | GENRE | MPAA"
   Hirb::View.enable
-  Hirb::View.capture_and_render { puts Movie.all(options[:order]) }
+  Hirb::View.capture_and_render { puts "[ID] | NAME | AGGREGATE RATING | TOTAL REVIEWS | YEAR | LENGTH | BUDGET | GENRE | MPAA";puts Movie.all(options[:order]) }
 elsif command == "delete"
   found_movie = Movie.find(options[:name])
   if found_movie.nil?
