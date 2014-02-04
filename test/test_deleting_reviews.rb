@@ -2,9 +2,10 @@ require_relative 'helper'
 
 class TestDeletingReviews < MovieTest
   def test_delete_review
-    `./eac create review 'Matrix The' --review 9.5 --environment test`
-    command = './eac delete review "Matrix The" --id 1 --environment test'
-    expected = 'The movie review for "Matrix The" has been deleted from the database.'
+    `./eac create movie Anchorman2 --genre "comedy" --year 2013 --length 100 --budget 20000000 --mpaa R --environment test`
+    `./eac create review 'Anchorman2' --review 9.5 --environment test`
+    command = './eac delete review "Anchorman2" --id 1 --environment test'
+    expected = 'The movie review for "Anchorman2" has been deleted from the database.'
     assert_command_output expected, command
   end
 

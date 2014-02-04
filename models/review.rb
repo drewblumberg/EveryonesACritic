@@ -41,6 +41,13 @@ class Review
     end
   end
 
+  def self.find_by_id id
+    database = Environment.database_connection
+    database.results_as_hash = true
+    results = database.execute "SELECT * FROM reviews WHERE reviewID=#{id}"
+    results[0]
+  end
+
   def self.delete id
     db = Environment.database_connection
     db.execute "DELETE FROM reviews WHERE CAST(reviewID AS INTEGER)= #{id}"

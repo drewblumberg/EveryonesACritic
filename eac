@@ -84,6 +84,11 @@ elsif category == "review"
       review = Review.new(options)
       review.save
 
+      movie = Movie.find(options[:name])
+      options[:aggregateRating] = movie.aggregateRating ? ((movie.totalReviews * movie.aggregateRating) + review.review.to_f) / (movie.totalReviews + 1) : review.review.to_f
+      options[:totalReviews] = movie.totalReviews ? movie.totalReviews + 1 : 1
+      movie.update(options)
+
       puts "A movie review of #{review.review} for #{options[:name]} was created."
     else
       puts error_messages
@@ -110,6 +115,16 @@ elsif category == "review"
         similar = Movie.find_similar(options[:name])
         formatted_result = "No movie found."
       else
+        movie = Movie.find(options[:name])
+        review_delete = Review.find_by_id(options[:id])
+        # binding.pry
+        unless movie.totalReviews == 1
+          options[:aggregateRating] = ((movie.totalReviews * movie.aggregateRating) - review_delete["review"]) / (movie.totalReviews - 1)
+        else
+          options[:aggregateRating] = 0
+        end
+        options[:totalReviews] = movie.totalReviews - 1
+        movie.update(options)
         Review.delete(options[:id])
         formatted_result = "The movie review for \"#{options[:name]}\" has been deleted from the database."
       end

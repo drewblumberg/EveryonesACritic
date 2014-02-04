@@ -26,7 +26,11 @@ class Movie
     end
 
     if id
-      db.execute "UPDATE movies SET title = '#{name}', year = #{year}, length = #{length}, budget = #{budget}, mpaa = '#{mpaa}', genreID = #{genreID} WHERE CAST(movieID AS INTEGER)=#{id}"
+      if aggregateRating and totalReviews
+        db.execute "UPDATE movies SET title = '#{name}', year = #{year}, length = #{length}, budget = #{budget}, mpaa = '#{mpaa}', genreID = #{genreID}, aggregateRating = #{aggregateRating}, totalReviews = #{totalReviews} WHERE CAST(movieID AS INTEGER)=#{id}"
+      else
+        db.execute "UPDATE movies SET title = '#{name}', year = #{year}, length = #{length}, budget = #{budget}, mpaa = '#{mpaa}', genreID = #{genreID}, aggregateRating = NULL, totalReviews = NULL WHERE CAST(movieID AS INTEGER)=#{id}"
+      end
       success = true
     else
       movie_row = db.execute "SELECT * FROM movies WHERE CAST(title AS varchar)='#{name}'"
@@ -102,10 +106,12 @@ class Movie
     results = "SELECT * FROM movies"
 
     unless constraint.nil?
-      if ['year', 'length', 'budget', 'aggregateRating', 'totalReviews'].include?(constraint)
+      if ['year', 'length', 'budget', 'totalReviews'].include?(constraint)
         results << " WHERE CAST(#{constraint} AS INTEGER)= #{value}"
       elsif ['title', 'mpaa']
         results << " WHERE CAST(#{constraint} AS VARCHAR)= '#{value}'"
+      elsif ['aggregateRating'].include?(constraint)
+        results << " WHERE CAST(#{constraint} AS REAL)= #{value}"
       else
         results << ""
       end

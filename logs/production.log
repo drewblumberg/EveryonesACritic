@@ -84,3 +84,13 @@ I, [2014-02-04T00:58:51.156625 #99912]  INFO -- : Executing: SELECT * FROM movie
 I, [2014-02-04T01:00:57.685803 #131]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(mpaa AS VARCHAR)= R ORDER BY aggregateRating DESC
 I, [2014-02-04T01:01:06.973231 #371]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(mpaa AS VARCHAR)= 'R' ORDER BY aggregateRating DESC
 I, [2014-02-04T01:01:20.409976 #579]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(mpaa AS VARCHAR)= 'R' ORDER BY aggregateRating DESC
+I, [2014-02-04T01:07:51.004712 #1173]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-02-04T01:07:59.111799 #1182]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-02-04T01:38:47.540705 #2615]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Anchorman2'
+I, [2014-02-04T01:38:47.567639 #2615]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Anchorman2%'
+I, [2014-02-04T01:39:05.874300 #2711]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Anchorman2'
+I, [2014-02-04T01:39:05.903456 #2711]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Anchorman2%'
+I, [2014-02-04T01:40:24.438096 #3090]  INFO -- : Executing: SELECT * FROM reviews INNER JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='Anchorman2'
+I, [2014-02-04T01:40:24.465919 #3090]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Anchorman2%'
+I, [2014-02-04T01:41:15.927894 #3283]  INFO -- : Executing: SELECT * FROM reviews INNER JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='Anchorman2'
+I, [2014-02-04T01:41:15.955547 #3283]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Anchorman2%'

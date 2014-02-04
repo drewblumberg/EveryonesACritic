@@ -3,8 +3,9 @@ require_relative '../lib/environment'
 
 class TestEnteringReviews < MovieTest
   def test_valid_review_information_gets_printed
-    command = "./eac create review 'Matrix The' --review 9.5 --environment test"
-    expected = "A movie review of 9.5 for Matrix The was created."
+    `./eac create movie Anchorman2 --genre "comedy" --year 2013 --length 100 --budget 20000000 --mpaa R --environment test`
+    command = "./eac create review 'Anchorman2' --review 9.5 --environment test"
+    expected = "A movie review of 9.5 for Anchorman2 was created."
     assert_command_output expected, command
   end
 
