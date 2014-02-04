@@ -1,12 +1,12 @@
 require_relative 'helper'
 
-class TestSearchingMovies < MovieTest
+class TestSearchingReviews < MovieTest
   def test_search_returns_movie
     `./eac create review 'Matrix The' --review 9.5 --environment test`
     `./eac create review 'Matrix The' --review 9 --environment test`
     command = './eac search review "Matrix The" --environment test'
-    expected = "Matrix The: review score 9.5"
-    expected2 = "Matrix The: review score 9.0"
+    expected = "[1] Matrix The: review score 9.5"
+    expected2 = "[2] Matrix The: review score 9.0"
     assert_command_output_includes expected, command
     assert_command_output_includes expected2, command
   end

@@ -94,6 +94,25 @@ elsif category == "review"
       puts "Did you mean: "
       puts similar.join(", ")
     end
+  elsif command == "delete"
+    error_messages = ParseArguments.validate_review_delete(options)
+    if error_messages.empty?
+      found_review = Review.find(options[:name])
+      if found_review.empty?
+        similar = Movie.find_similar(options[:name])
+        formatted_result = "No movie found."
+      else
+        Review.delete(options[:id])
+        formatted_result = "The movie review for \"#{options[:name]}\" has been deleted from the database."
+      end
+      puts formatted_result
+      if similar and similar[0]
+        puts "Did you mean: "
+        puts similar.join(", ")
+      end
+    else
+      puts error_messages
+    end
   else
     puts "Command not recognized. Try create, search, edit, list, or delete."
   end

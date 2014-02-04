@@ -74,3 +74,5 @@ I, [2014-02-03T23:33:59.707386 #91893]  INFO -- : Executing: SELECT * FROM revie
 I, [2014-02-03T23:34:14.385065 #91989]  INFO -- : Executing: SELECT * FROM reviews JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='Matrix The'
 I, [2014-02-03T23:34:55.226157 #92089]  INFO -- : Executing: SELECT * FROM reviews JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='Matrix The'
 I, [2014-02-03T23:37:56.196274 #92305]  INFO -- : Executing: SELECT * FROM reviews INNER JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='Matrix The'
+I, [2014-02-04T00:23:48.591312 #97232]  INFO -- : Executing: SELECT * FROM reviews INNER JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='Matrix The'
+I, [2014-02-04T00:23:48.622469 #97232]  INFO -- : Executing: DELETE FROM reviews WHERE CAST(reviewID AS INTEGER)= 1

@@ -32,13 +32,18 @@ class Review
     if results
       reviews = []
       results.each do |result|
-        formatted_result = "#{result['title']}: review score #{result['review']}"
+        formatted_result = "[#{result['reviewID']}] #{result['title']}: review score #{result['review']}"
         reviews << formatted_result
       end
       reviews
     else
       nil
     end
+  end
+
+  def self.delete id
+    db = Environment.database_connection
+    db.execute "DELETE FROM reviews WHERE CAST(reviewID AS INTEGER)= #{id}"
   end
 
   protected

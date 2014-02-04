@@ -79,4 +79,16 @@ class ParseArguments
     end
     errors
   end
+
+  def self.validate_review_delete(options)
+    errors = ""
+    if options[:name].nil? or options[:name].empty?
+      errors << "You must provide the name of the movie for which you are trying to delete.\n"
+    end
+
+    unless options[:id]
+      errors << "You must provide the review id of the movie review you are trying to delete."
+    end
+    errors
+  end
 end
