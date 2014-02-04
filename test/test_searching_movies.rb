@@ -9,7 +9,7 @@ class TestSearchingMovies < MovieTest
 
   def test_search_returns_no_movie
     command = './eac search movie "asdfghjasdfghj" --environment test'
-    expected = "No movie found with title 'asdfghjasdfghj'. Would you like to create one? Just use the command 'movie create'."
+    expected = "No movie found with title 'asdfghjasdfghj'. Would you like to create one? Just use the command 'create movie'."
     assert_command_output expected, command
   end
 

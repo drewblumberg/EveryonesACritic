@@ -1,4 +1,5 @@
 require_relative 'genre'
+require_relative 'review'
 require 'pry'
 
 class Movie

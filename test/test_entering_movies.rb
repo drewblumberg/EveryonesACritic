@@ -77,7 +77,7 @@ class TestEnteringMovies < MovieTest
   end
 
   def test_command_not_recognized
-    command = "./eac badcommand Anchorman2 --genre 'comedy' --year 2013 --length 100 --budget 20000000 --mpaa R --environment test"
+    command = "./eac badcommand movie Anchorman2 --genre 'comedy' --year 2013 --length 100 --budget 20000000 --mpaa R --environment test"
     expected = "Command not recognized. Try create, search, edit, list, or delete."
     assert_command_output expected, command
   end

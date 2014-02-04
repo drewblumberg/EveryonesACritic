@@ -24,6 +24,9 @@ class MovieTest < MiniTest::Unit::TestCase
     result2 = database.execute "SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman3'"
     database.execute "DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'" if result.length > 0
     database.execute "DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman3'" if result2.length > 0
+
+    # Delete reviews from db
+    database.execute "DELETE FROM reviews"
   end
 
   def assert_in_output output, *args

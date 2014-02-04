@@ -61,3 +61,11 @@ I, [2014-01-31T15:48:52.838432 #63717]  INFO -- : Executing: SELECT * FROM movie
 I, [2014-01-31T15:48:52.867080 #63717]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Anchorman 4%'
 I, [2014-02-03T18:32:35.981113 #82257]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
 I, [2014-02-03T18:49:38.691823 #82652]  INFO -- : Executing: SELECT * FROM movies ORDER BY title ASC
+I, [2014-02-03T19:06:17.721361 #83822]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Anchorman'
+I, [2014-02-03T19:06:17.749372 #83822]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Anchorman%'
+I, [2014-02-03T19:06:34.701905 #83915]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Anchorman: The Legend of Ron Burgundy'
+I, [2014-02-03T19:07:01.427190 #84100]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Anchorman: The Legend of Ron Burgunds'
+I, [2014-02-03T19:07:01.454082 #84100]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%Anchorman: The Legend of Ron Burgunds%'
+I, [2014-02-03T23:06:04.201485 #90054]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='The Matrix'
+I, [2014-02-03T23:06:04.490661 #90054]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%The Matrix%'
+I, [2014-02-03T23:06:17.535898 #90234]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'

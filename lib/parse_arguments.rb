@@ -39,6 +39,10 @@ class ParseArguments
         options[:order] = order
       end
 
+      opts.on("--review [REVIEW]", 'The review score of the movie') do |review|
+        options[:review] = review
+      end
+
       opts.on("--environment [ENV]", "The database environment") do |env|
         options[:environment] = env
       end
@@ -46,7 +50,7 @@ class ParseArguments
     options
   end
 
-  def self.validate(options, category)
+  def self.validate(options)
     errors = ""
     if options[:name].nil? or options[:name].empty?
       errors << "You must provide the name of the movie you are creating.\n"
@@ -59,7 +63,19 @@ class ParseArguments
     missing_things << "budget" unless options[:budget]
     missing_things << "mpaa" unless options[:mpaa]
     unless missing_things.empty?
-      errors << "You must provide the #{missing_things.join(" and ")} of the #{category} you are adding.\n"
+      errors << "You must provide the #{missing_things.join(" and ")} of the movie you are adding.\n"
+    end
+    errors
+  end
+
+  def self.validate_review(options)
+    errors = ""
+    if options[:name].nil? or options[:name].empty?
+      errors << "You must provide the name of the movie for which you are creating a review.\n"
+    end
+
+    unless options[:review]
+      errors << "You must provide the review score of the movie you are reviewing."
     end
     errors
   end
