@@ -1,3 +1,5 @@
+require 'pry'
+
 class Review
   attr_accessor :review, :name
   attr_reader :id
@@ -20,6 +22,22 @@ class Review
       totalReviewIDs = db.execute "SELECT COUNT(*) FROM reviews"
       @id ||= totalReviewIDs[0][0] + 1
       db.execute "INSERT INTO reviews(reviewID,movieID,review) VALUES (#{@id},'#{movieID}',#{review})"
+    end
+  end
+
+  def self.find name
+    database = Environment.database_connection
+    database.results_as_hash = true
+    results = database.execute "SELECT * FROM reviews INNER JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='#{name}'"
+    if results
+      reviews = []
+      results.each do |result|
+        formatted_result = "#{result['title']}: review score #{result['review']}"
+        reviews << formatted_result
+      end
+      reviews
+    else
+      nil
     end
   end
 

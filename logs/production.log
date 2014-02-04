@@ -69,3 +69,8 @@ I, [2014-02-03T19:07:01.454082 #84100]  INFO -- : Executing: SELECT * FROM movie
 I, [2014-02-03T23:06:04.201485 #90054]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='The Matrix'
 I, [2014-02-03T23:06:04.490661 #90054]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR) LIKE '%The Matrix%'
 I, [2014-02-03T23:06:17.535898 #90234]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'
+I, [2014-02-03T23:33:30.475962 #91703]  INFO -- : Executing: SELECT * FROM reviews JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='Matrix The'
+I, [2014-02-03T23:33:59.707386 #91893]  INFO -- : Executing: SELECT * FROM reviews JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='Matrix The'
+I, [2014-02-03T23:34:14.385065 #91989]  INFO -- : Executing: SELECT * FROM reviews JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='Matrix The'
+I, [2014-02-03T23:34:55.226157 #92089]  INFO -- : Executing: SELECT * FROM reviews JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='Matrix The'
+I, [2014-02-03T23:37:56.196274 #92305]  INFO -- : Executing: SELECT * FROM reviews INNER JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS varchar)='Matrix The'

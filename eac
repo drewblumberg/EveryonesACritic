@@ -80,6 +80,20 @@ elsif category == "review"
     else
       puts error_messages
     end
+  elsif command == "search"
+    found_reviews = Review.find(options[:name])
+    if found_reviews.empty?
+      similar = Movie.find_similar(options[:name])
+      formatted_result = "No movie reviews found with title '#{options[:name]}'. Would you like to create one? Just use the command 'create review'."
+    else
+      Hirb::View.enable
+      Hirb::View.capture_and_render { puts found_reviews }
+    end
+    puts formatted_result
+    if similar and similar[0]
+      puts "Did you mean: "
+      puts similar.join(", ")
+    end
   else
     puts "Command not recognized. Try create, search, edit, list, or delete."
   end
