@@ -118,3 +118,6 @@ I, [2014-02-04T11:09:09.174749 #19490]  INFO -- : Executing: INSERT INTO reviews
 I, [2014-02-04T11:09:09.176924 #19490]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Anchorman 2'
 I, [2014-02-04T11:09:09.201218 #19490]  INFO -- : Executing: UPDATE movies SET title = 'Anchorman 2', year = 2013, length = 180, budget = 100000000, mpaa = 'R', genreID = 8, aggregateRating = 9.0, totalReviews = 2 WHERE CAST(movieID AS INTEGER)=58788
 I, [2014-02-04T11:09:12.671134 #19587]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Anchorman 2'
+I, [2014-02-05T22:46:03.039292 #31836]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'
+I, [2014-02-05T22:46:45.429474 #32114]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(year AS VARCHAR)= '2000' ORDER BY aggregateRating DESC
+I, [2014-02-06T14:10:23.293052 #37638]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(year AS VARCHAR)= '2000' ORDER BY aggregateRating DESC

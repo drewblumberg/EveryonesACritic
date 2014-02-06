@@ -5,6 +5,7 @@ require 'pry'
 class Movie
   attr_accessor :name, :year, :length, :budget, :mpaa, :genre, :aggregateRating, :totalReviews
   attr_reader :id
+  # self.primary_key = :movieID
 
   def initialize attributes = {}
     update_attributes(attributes)

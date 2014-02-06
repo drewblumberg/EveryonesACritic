@@ -3,6 +3,7 @@ ruby "2.0.0"
 
 source "https://rubygems.org"
 
-gem 'sqlite3'
-gem 'pry'
+gem 'activerecord'
 gem 'hirb'
+gem 'pry'
+gem 'sqlite3'

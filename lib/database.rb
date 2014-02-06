@@ -2,7 +2,7 @@ require "sqlite3"
 
 class Database < SQLite3::Database
   def self.connection(environment)
-    @connection ||= Database.new("db/critic_#{environment}.db")
+    @connection ||= Database.new("db/eac_#{environment}.sqlite3")
   end
 
   def execute(statement)
