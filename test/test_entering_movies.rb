@@ -10,27 +10,27 @@ class TestEnteringMovies < MovieTest
 
   def test_valid_movie_gets_saved
     # Current movie numbers
-    orig_movies = database.execute "SELECT COUNT(*) FROM movies"
+    orig_movies = Movie.count
 
     `./eac create movie Anchorman2 --genre comedy --year 2013 --length 100 --budget 20000000 --mpaa R --environment test`
     results = database.execute "SELECT title,year,length,budget,mpaa FROM movies WHERE title='Anchorman2'"
     expected = {"title"=>"Anchorman2", "year"=>2013, "length"=>100, "budget"=>20000000, "mpaa"=>"R", 0=>"Anchorman2", 1=>2013, 2=>100, 3=>20000000, 4=>"R"}
     assert_equal expected, results[0]
 
-    result = database.execute "SELECT COUNT(*) FROM movies"
-    assert_equal (orig_movies[0][0] + 1), result[0][0]
+    result = Movie.count
+    assert_equal (orig_movies + 1), result
   end
 
   def test_invalid_movie_doesnt_get_saved
     # Current movie numbers
-    orig_movies = database.execute "SELECT COUNT(*) FROM movies"
+    orig_movies = Movie.count
 
     command = "./eac create movie Anchorman2"
     expected = "You must provide the genre and year and length and budget and mpaa of the movie you are adding."
     assert_command_output expected, command
 
-    result = database.execute "SELECT COUNT(*) FROM movies"
-    assert_equal orig_movies[0][0], result[0][0]
+    result = Movie.count
+    assert_equal orig_movies, result
   end
 
   def test_error_message_for_missing_genre

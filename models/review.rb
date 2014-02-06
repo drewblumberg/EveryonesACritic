@@ -8,6 +8,11 @@ class Review
     update_attributes(attributes)
   end
 
+  def self.count
+    database = Environment.database_connection
+    database.execute("SELECT COUNT(*) FROM reviews")[0][0]
+  end
+
   def save
     db = Environment.database_connection
 

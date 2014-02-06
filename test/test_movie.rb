@@ -4,9 +4,9 @@ class TestMovie < MovieTest
 
   def test_saved_purchases_are_saved
     movie = Movie.new(name: "Anchorman2", genre: "comedy", year: 2013, length: 100, budget: 20000000, mpaa: "R")
-    movies_before = database.execute("SELECT COUNT(movieID) from movies")[0][0]
+    movies_before = Movie.count
     movie.save
-    movies_after = database.execute("SELECT COUNT(movieID) from movies")[0][0]
+    movies_after = Movie.count
     assert_equal movies_before + 1, movies_after 
   end
 
@@ -28,17 +28,17 @@ class TestMovie < MovieTest
 
   def test_delete_deletes_a_movie
     movie = Movie.create(name: "Anchorman2", genre: "comedy", year: 2013, length: 100, budget: 20000000, mpaa: "R")
-    movies_before = database.execute("SELECT COUNT(movieID) from movies")[0][0]
+    movies_before = Movie.count
     movie.delete
-    movies_after = database.execute("SELECT COUNT(movieID) from movies")[0][0]
+    movies_after = Movie.count
     assert_equal movies_before - 1, movies_after
   end
 
   def test_update_doesnt_insert_new_row
     movie = Movie.create(name: "Anchorman2", genre: "comedy", year: 2013, length: 100, budget: 20000000, mpaa: "R")
-    movies_before = database.execute("SELECT COUNT(movieID) from movies")[0][0]
+    movies_before = Movie.count
     movie.update(name: "Anchorman3")
-    movies_after = database.execute("SELECT COUNT(movieID) from movies")[0][0]
+    movies_after = Movie.count
     assert_equal movies_before, movies_after
   end
 

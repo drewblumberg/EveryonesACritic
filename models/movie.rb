@@ -11,6 +11,11 @@ class Movie
     update_attributes(attributes)
   end
 
+  def self.count
+    database = Environment.database_connection
+    database.execute("SELECT COUNT(*) FROM movies")[0][0]
+  end
+
   def self.create(attributes = {})
     movie = Movie.new(attributes)
     movie.save
