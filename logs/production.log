@@ -123,3 +123,11 @@ I, [2014-02-05T22:46:45.429474 #32114]  INFO -- : Executing: SELECT * FROM movie
 I, [2014-02-06T14:10:23.293052 #37638]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(year AS VARCHAR)= '2000' ORDER BY aggregateRating DESC
 I, [2014-02-06T14:28:43.564684 #39652]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'
 I, [2014-02-06T14:37:31.904264 #40103]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'
+I, [2014-02-06T15:04:59.249364 #41159]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'
+I, [2014-02-06T15:06:56.537325 #41446]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'
+I, [2014-02-06T15:08:10.720590 #41715]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'
+I, [2014-02-06T15:09:27.899413 #41992]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'
+I, [2014-02-06T15:11:34.256492 #42277]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'
+I, [2014-02-06T15:13:42.205422 #42560]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'
+I, [2014-02-06T15:40:59.378834 #43351]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'
+I, [2014-02-06T15:44:32.135651 #43734]  INFO -- : Executing: SELECT * FROM movies WHERE CAST(title AS VARCHAR)='Matrix The'

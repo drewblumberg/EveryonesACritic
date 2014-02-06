@@ -9,6 +9,11 @@ class Movie
 
   def initialize attributes = {}
     update_attributes(attributes)
+    self.genre ||= genre.default
+  end
+
+  def self.default
+    @@default ||= Movie.all.first
   end
 
   def self.count
@@ -100,7 +105,7 @@ class Movie
     similar_titles
   end
 
-  def self.all order, constraint = nil, value = nil
+  def self.all order = nil, constraint = nil, value = nil
     database = Environment.database_connection
     database.results_as_hash = true
     if order and ["movieID", "title", "year", "length", "budget", "mpaa", "genreID", "aggregateRating", "totalReviews"].include?(order)

@@ -49,8 +49,15 @@ class Review
   def self.find_by_id id
     database = Environment.database_connection
     database.results_as_hash = true
-    results = database.execute "SELECT * FROM reviews WHERE reviewID=#{id}"
-    results[0]
+    results = database.execute("SELECT * FROM reviews WHERE reviewID=#{id}")[0]
+    if results
+      movie = Movie.find_by_id(results["movieID"])
+      review = Review.new(name: results["name"], review: results["review"], movie: movie)
+      review.send("id=", results["id"])
+      review
+    else
+      nil
+    end  
   end
 
   def self.delete id

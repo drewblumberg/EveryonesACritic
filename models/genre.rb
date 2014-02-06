@@ -4,6 +4,9 @@ class Genre
   attr_accessor :name
   # self.primary_key = :movieID
 
+  def self.default
+    @@default ||= Genre.new("action")
+  end
 
   def initialize(name)
     self.name = name

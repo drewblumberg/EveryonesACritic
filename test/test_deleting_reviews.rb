@@ -19,13 +19,13 @@ class TestDeletingReviews < MovieTest
   def test_invalid_review_doesnt_get_deleted
     skip
     # Current review numbers
-    orig_reviews = database.execute "SELECT COUNT(*) FROM reviews"
+    orig_reviews = Review.count
 
     command = "./eac delete review 'Matrix The' --environment test"
     expected = "You must provide the review id of the movie review you are trying to delete."
     assert_command_output expected, command
 
-    result = database.execute "SELECT COUNT(*) FROM reviews"
-    assert_equal orig_reviews[0][0], result[0][0]
+    result = Review.count
+    assert_equal orig_reviews, result
   end
 end
