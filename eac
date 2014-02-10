@@ -26,7 +26,7 @@ class EAC
           formatted_result = "No movie found with title '#{options[:name]}'. Would you like to create one? Just use the command 'create movie'."
         else
           genre = Genre.parse_name(found_movie.genre_id)
-          formatted_result = "#{options[:name]} (#{found_movie.aggregateRating} review score): #{genre} film released in #{found_movie.year}, it has a length of #{found_movie.length} minutes, a budget of $#{found_movie.budget}, and is rated #{found_movie.mpaa}."
+          formatted_result = "#{options[:name]} (#{found_movie.aggregateRating.round(1)} review score): #{genre} film released in #{found_movie.year}, it has a length of #{found_movie.length} minutes, a budget of $#{found_movie.budget}, and is rated #{found_movie.mpaa}."
         end
         puts formatted_result
         if similar and similar[0]
@@ -148,6 +148,7 @@ class EAC
           movie = Movie.find_by(name: options[:name])
           found_review = Review.find_by(movie_id: movie.id) if movie
           if movie.nil?
+            similar = Movie.find_similar(options[:name])
             formatted_result = "No movie found."
           else
             review_delete = Review.find(options[:id])
@@ -162,6 +163,10 @@ class EAC
             formatted_result = "The movie review for \"#{options[:name]}\" has been deleted from the database."
           end
           puts formatted_result
+          if similar and similar[0]
+            puts "Did you mean: "
+            puts similar.join(", ")
+          end
         else
           puts error_messages
         end

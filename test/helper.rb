@@ -20,16 +20,12 @@ class MovieTest < MiniTest::Unit::TestCase
   end
 
   def teardown
-    # # Delete movie from db
-    # result = database.execute "SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'"
-    # result2 = database.execute "SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman3'"
-    # database.execute "DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'" if result.length > 0
-    # database.execute "DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman3'" if result2.length > 0
-
-    # # Delete reviews from db
-    # database.execute "DELETE FROM reviews"
-
     Movie.destroy_all
+    Review.destroy_all
+
+    Environment.environment = "production"
+    Environment.connect_to_database
+
     Review.destroy_all
   end
 

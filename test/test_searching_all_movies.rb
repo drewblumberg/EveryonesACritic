@@ -2,16 +2,14 @@ require_relative 'helper'
 
 class TestSearchingAllMovies < MovieTest
   def test_returns_helper_row
-    skip
     command = "./eac list movie"
     expected = "[ID] | NAME | AGGREGATE RATING | TOTAL REVIEWS | YEAR | LENGTH | BUDGET | GENRE | MPAA"
     assert_command_output_includes expected, command
   end
 
   def test_returns_movie_data
-    skip
     command = "./eac list movie"
-    expected = "[197] | 15 Minutes | 6.1 | 10866 | 2001 | 120 | 42000000 | 8 | R"
+    expected = "[194] | 15 Minutes | 4.8 | 19 | 1999 | 25 | 0 | comedy-short | "
     assert_command_output_includes expected, command
   end
 end

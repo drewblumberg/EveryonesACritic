@@ -2,7 +2,6 @@ class Genre
   @@genre_order = {"action" => 1, "animation" => 2, "comedy" => 4, "drama" => 8, "documentary" => 16, "romance" => 32, "short" => 64 }
   attr_reader :id
   attr_accessor :name
-  # self.primary_key = :movieID
 
   def self.default
     @@default ||= Genre.new("action")

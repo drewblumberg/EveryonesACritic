@@ -13,7 +13,6 @@ class TestEnteringMovies < MovieTest
     orig_movies = Movie.count
 
     `./eac create movie Anchorman2 --genre comedy --year 2013 --length 100 --budget 20000000 --mpaa R --environment test`
-    # results = database.execute "SELECT title,year,length,budget,mpaa FROM movies WHERE title='Anchorman2'"
     result = Movie.find_by(name: "Anchorman2")
     actual = [result.name, result.year, result.length, result.budget, result.mpaa]
     expected = ["Anchorman2", 2013, 100, 20000000, "R"]

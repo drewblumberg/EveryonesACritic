@@ -10,21 +10,22 @@ class TestEnteringReviews < MovieTest
   end
 
   def test_valid_review_gets_saved
-    skip
     # Current review numbers
     orig_reviews = Review.count
 
-    `./eac create review 'Matrix The' --review 9.5 --environment test`
-    results = database.execute "SELECT reviews.movieID, reviews.review, movies.title FROM reviews INNER JOIN movies ON reviews.movieID = CAST(movies.movieID AS INTEGER) WHERE CAST(movies.title AS VARCHAR)='Matrix The'"
-    expected = {"movieID"=>32710, "review"=>9.5, "title"=>"Matrix The", 0=>32710, 1=>9.5, 2=>"Matrix The"}
-    assert_equal expected, results[0]
+    `./eac create movie Anchorman2 --genre "comedy" --year 2013 --length 100 --budget 20000000 --mpaa R --environment test`
+    `./eac create review Anchorman2 --review 9.5 --environment test`
+    movie = Movie.find_by(name: 'Anchorman2')
+    review = Review.all.where(movie_id: movie.id)
+    expected = [9.5, "Anchorman2"]
+    results = [review[0].review.to_f.round(1), movie.name]
+    assert_equal expected, results
 
     result = Review.count
     assert_equal (orig_reviews + 1), result
   end
 
   def test_invalid_movie_doesnt_get_saved
-    skip
     # Current movie numbers
     orig_reviews = Review.count
 

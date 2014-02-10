@@ -10,18 +10,16 @@ class TestDeletingReviews < MovieTest
   end
 
   def test_delete_review_returns_similar
-    skip
-    command = './eac delete review "Matrix" --id 1 --environment test'
+    command = './eac delete review "Matrix" --id 1'
     expected = "No movie found.\nDid you mean: \nAnimatrix: Final Flight of the Osiris The, Matrix Reloaded The, Matrix Revolutions The, Matrix The, Sex Files: Sexual Matrix, That 70s Matrix"
     assert_command_output expected, command
   end
 
   def test_invalid_review_doesnt_get_deleted
-    skip
     # Current review numbers
     orig_reviews = Review.count
 
-    command = "./eac delete review 'Matrix The' --environment test"
+    command = "./eac delete review 'Matrix The'"
     expected = "You must provide the review id of the movie review you are trying to delete."
     assert_command_output expected, command
 

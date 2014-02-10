@@ -14,6 +14,13 @@ desc "Run tests"
 task :default => :test
 
 # Transfer files from db to sqlite3
+desc 'import data from the given file'
+task :import_data do
+  Environment.environment = "production"
+  Environment.connect_to_database
+  require_relative 'lib/importer'
+  Importer.import("movies_v2.csv")
+end
 
 # Setup active record to work with db
 db_namespace = namespace :db do
