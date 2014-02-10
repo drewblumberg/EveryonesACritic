@@ -13,8 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20140205024000) do
 
-  create_table "genres", id: false, force: true do |t|
-    t.integer "genreID",     null: false
+  create_table "genres", force: true do |t|
     t.integer "action"
     t.integer "animation"
     t.integer "comedy"
@@ -24,21 +23,19 @@ ActiveRecord::Schema.define(version: 20140205024000) do
     t.integer "short"
   end
 
-  create_table "movies", id: false, force: true do |t|
-    t.integer "movieID",         null: false
-    t.string  "title"
+  create_table "movies", force: true do |t|
+    t.string  "name"
     t.integer "year"
     t.integer "length"
     t.integer "budget"
     t.decimal "aggregateRating"
     t.integer "totalReviews"
     t.string  "mpaa"
-    t.integer "genreID"
+    t.integer "genre_id"
   end
 
-  create_table "reviews", id: false, force: true do |t|
-    t.integer "reviewID", null: false
-    t.integer "movieID"
+  create_table "reviews", force: true do |t|
+    t.integer "movie_id"
     t.decimal "review"
   end
 

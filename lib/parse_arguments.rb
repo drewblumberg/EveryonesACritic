@@ -8,7 +8,8 @@ class ParseArguments
       opts.banner = "Usage: eac [command] [category] [options]"
 
       opts.on("--genre [GENRE]", "The genre") do |genre|
-        options[:genre] = genre
+        genre_new = Genre.new(genre)
+        options[:genre_id] = genre_new.parse_id
       end
 
       opts.on("--year [YEAR]", "The year") do |year|
@@ -48,13 +49,16 @@ class ParseArguments
       end
 
       opts.on("--totalReviews [TOTALREVIEWS]", 'The total reveiws of the movie') do |total|
-        options[:review] = total
+        options[:totalReviews] = total
       end
 
       opts.on("--environment [ENV]", "The database environment") do |env|
         options[:environment] = env
       end
     end.parse!
+    options[:name] ||= ARGV[2]
+    options[:command] = ARGV[0]
+    options[:category] = ARGV[1]
     options
   end
 
@@ -65,7 +69,7 @@ class ParseArguments
     end
 
     missing_things = []
-    missing_things << "genre" unless options[:genre]
+    missing_things << "genre" unless options[:genre_id]
     missing_things << "year" unless options[:year]
     missing_things << "length" unless options[:length]
     missing_things << "budget" unless options[:budget]

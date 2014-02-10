@@ -1,23 +1,23 @@
 require 'sqlite3'
 
-db = SQLite3::Database.new "./db/critic_production.db"
+db = SQLite3::Database.new "./db/eac_production.sqlite3"
 
-db.execute <<-SQL
-  drop table genres;
-SQL
+# db.execute <<-SQL
+#   drop table genres;
+# SQL
 
-db.execute <<-SQL
-  create table genres (
-    genreID int PRIMARY KEY,
-    action int,
-    animation int,
-    comedy int,
-    drama int,
-    documentary int,
-    romance int,
-    short int
-  );
-SQL
+# db.execute <<-SQL
+#   create table genres (
+#     id int PRIMARY KEY,
+#     action int,
+#     animation int,
+#     comedy int,
+#     drama int,
+#     documentary int,
+#     romance int,
+#     short int
+#   );
+# SQL
 
 $MAX_GENRE_TYPES = 127
 all_genres = []
@@ -42,19 +42,3 @@ end
 all_genres.each do |genre|
   db.execute "INSERT INTO genres values ( ?, ?, ?, ?, ?, ?, ?, ? )", genre
 end
-
-CREATE TABLE movies (
-  movieID INTEGER PRIMARY KEY,
-  title VARCHAR(50),
-  year INTEGER,
-  length INTEGER,
-  budget INTEGER,
-  aggregateRating INTEGER,
-  totalReviews INTEGER,
-  mpaa VARCHAR(6)
-);
-
-INSERT INTO movies(movieID,title,year,length,budget,aggregateRating,totalReviews,mpaa)
-SELECT movieID,title,year,length,budget,rating,votes,mpaa
-FROM tmp_movies;
-

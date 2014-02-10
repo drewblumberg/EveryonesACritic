@@ -3,6 +3,12 @@ require_relative '../lib/environment'
 
 
 class MovieTest < MiniTest::Unit::TestCase
+
+  def setup
+    Environment.environment = "test"
+    Environment.connect_to_database
+  end
+
   def assert_command_output expected, command
     actual = `#{command}`.strip
     assert_equal expected, actual
@@ -13,20 +19,18 @@ class MovieTest < MiniTest::Unit::TestCase
     assert_includes actual, expected
   end
 
-  def database
-    Environment.environment = "test"
-    Environment.database_connection
-  end
-
   def teardown
-    # Delete movie from db
-    result = database.execute "SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'"
-    result2 = database.execute "SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman3'"
-    database.execute "DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'" if result.length > 0
-    database.execute "DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman3'" if result2.length > 0
+    # # Delete movie from db
+    # result = database.execute "SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'"
+    # result2 = database.execute "SELECT * FROM movies WHERE CAST(title AS varchar) = 'Anchorman3'"
+    # database.execute "DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman2'" if result.length > 0
+    # database.execute "DELETE FROM movies WHERE CAST(title AS varchar) = 'Anchorman3'" if result2.length > 0
 
-    # Delete reviews from db
-    database.execute "DELETE FROM reviews"
+    # # Delete reviews from db
+    # database.execute "DELETE FROM reviews"
+
+    Movie.destroy_all
+    Review.destroy_all
   end
 
   def assert_in_output output, *args

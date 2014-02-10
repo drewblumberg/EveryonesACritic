@@ -4,141 +4,175 @@ require_relative 'lib/parse_arguments'
 require 'pry'
 require 'hirb'
 
-command = ARGV[0]
-category = ARGV[1]
-options = ParseArguments.parse
-options[:name] ||= ARGV[2]
+class EAC
+  attr_reader :options
 
-Environment.environment = options[:environment] || "production"
-database = Environment.database_connection
-
-if category == "movie"
-  if command == "search"
-    found_movie = Movie.find(options[:name])
-    if found_movie.nil?
-      similar = Movie.find_similar(options[:name])
-      formatted_result = "No movie found with title '#{options[:name]}'. Would you like to create one? Just use the command 'create movie'."
-    else
-      genre = Genre.parse_name(found_movie.genre)
-      formatted_result = "#{options[:name]} (#{found_movie.aggregateRating} review score): #{genre} film released in #{found_movie.year}, it has a length of #{found_movie.length} minutes, a budget of $#{found_movie.budget}, and is rated #{found_movie.mpaa}."
-    end
-    puts formatted_result
-    if similar and similar[0]
-      puts "Did you mean: "
-      puts similar.join(", ")
-    end
-  elsif command == "list"
-    constraints = [:aggregateRating, :totalReviews, :year, :length, :budget, :mpaa]
-    constraint = []
-    constraints.each do |con|
-      if options[con]
-        constraint << con
-        constraint << options[con]
-      end
-    end
-    Hirb::View.enable
-    Hirb::View.capture_and_render { puts "[ID] | NAME | AGGREGATE RATING | TOTAL REVIEWS | YEAR | LENGTH | BUDGET | GENRE | MPAA";puts Movie.all(options[:order], constraint[0], constraint[1]) }
-  elsif command == "delete"
-    found_movie = Movie.find(options[:name])
-    if found_movie.nil?
-      similar = Movie.find_similar(options[:name])
-      formatted_result = "No movie found."
-    else
-      found_movie.delete
-      formatted_result = "The movie \"#{options[:name]}\" has been deleted from the database."
-    end
-    puts formatted_result
-    if similar and similar[0]
-      puts "Did you mean: "
-      puts similar.join(", ")
-    end
-  elsif command == "edit"
-    if movie = Movie.find_by_id(options[:id])
-      movie.update(options)
-      genre = Genre.parse_name(movie.genre)
-      puts "A #{category} was updated and is now titled #{movie.name} with genre #{genre}, year #{movie.year}, length #{movie.length}, budget #{movie.budget}, and mpaa #{movie.mpaa} was created."
-    else
-      puts "Movie #{options[:id]} couldn't be found."
-    end
-  elsif command == "create"
-    error_messages = ParseArguments.validate(options)
-    if error_messages.empty?
-      movie = Movie.new(options)
-      success = movie.save
-      if success
-        genre = Genre.parse_name(movie.genre)
-        puts "A #{category} titled #{movie.name} with genre #{genre}, year #{movie.year}, length #{movie.length}, budget #{movie.budget}, and mpaa #{movie.mpaa} was created."
-      else
-        puts "A #{category} titled #{options[:name]} has already been created."
-      end
-    else
-      puts error_messages
-    end
-  else
-    puts "Command not recognized. Try create, search, edit, list, or delete."
+  def initialize
+    @options = ParseArguments.parse
+    Environment.environment = options[:environment] || "production"
+    @options.delete(:environment)
   end
-elsif category == "review"
-  if command == "create"
-    error_messages = ParseArguments.validate_review(options)
-    if error_messages.empty?
-      review = Review.new(options)
-      review.save
 
-      movie = Movie.find(options[:name])
-      options[:aggregateRating] = movie.aggregateRating ? ((movie.totalReviews * movie.aggregateRating) + review.review.to_f) / (movie.totalReviews + 1) : review.review.to_f
-      options[:totalReviews] = movie.totalReviews ? movie.totalReviews + 1 : 1
-      movie.update(options)
+  def main
+    Environment.connect_to_database
+    category = options.delete(:category)
+    command = options.delete(:command)
 
-      puts "A movie review of #{review.review} for #{options[:name]} was created."
-    else
-      puts error_messages
-    end
-  elsif command == "search"
-    found_reviews = Review.find(options[:name])
-    if found_reviews.empty?
-      similar = Movie.find_similar(options[:name])
-      formatted_result = "No movie reviews found with title '#{options[:name]}'. Would you like to create one? Just use the command 'create review'."
-    else
-      Hirb::View.enable
-      Hirb::View.capture_and_render { puts found_reviews }
-    end
-    puts formatted_result
-    if similar and similar[0]
-      puts "Did you mean: "
-      puts similar.join(", ")
-    end
-  elsif command == "delete"
-    error_messages = ParseArguments.validate_review_delete(options)
-    if error_messages.empty?
-      found_review = Review.find(options[:name])
-      if found_review.empty?
-        similar = Movie.find_similar(options[:name])
-        formatted_result = "No movie found."
-      else
-        movie = Movie.find(options[:name])
-        review_delete = Review.find_by_id(options[:id])
-        # binding.pry
-        unless movie.totalReviews == 1
-          options[:aggregateRating] = ((movie.totalReviews * movie.aggregateRating) - review_delete["review"]) / (movie.totalReviews - 1)
+    if category == "movie"
+      if command == "search"
+        found_movie = Movie.find_by(name: options[:name])
+        if found_movie.nil?
+          similar = Movie.find_similar(options[:name])
+          formatted_result = "No movie found with title '#{options[:name]}'. Would you like to create one? Just use the command 'create movie'."
         else
-          options[:aggregateRating] = 0
+          genre = Genre.parse_name(found_movie.genre_id)
+          formatted_result = "#{options[:name]} (#{found_movie.aggregateRating} review score): #{genre} film released in #{found_movie.year}, it has a length of #{found_movie.length} minutes, a budget of $#{found_movie.budget}, and is rated #{found_movie.mpaa}."
         end
-        options[:totalReviews] = movie.totalReviews - 1
-        movie.update(options)
-        Review.delete(options[:id])
-        formatted_result = "The movie review for \"#{options[:name]}\" has been deleted from the database."
+        puts formatted_result
+        if similar and similar[0]
+          puts "Did you mean: "
+          puts similar.join(", ")
+        end
+      elsif command == "list"
+        constraints = [:aggregateRating, :totalReviews, :year, :length, :budget, :mpaa]
+        constraint = []
+        constraints.each do |con|
+          if options[con]
+            constraint << con
+            constraint << options[con]
+          end
+        end
+
+        query = ""
+        query << "#{constraint[0]} = #{constraint[1]}" if constraint[0] and constraint[1]
+
+        if options[:order]
+          orderby = "#{options[:order]} ASC"
+          movies = Movie.where(query).order("budget ASC")
+        else
+          movies = Movie.where(query)
+        end
+
+        formatted_movies = []
+        movies.each do |m|
+          genre = Genre.parse_name(m.genre_id)
+          formatted_movies << "[#{m.id}] | #{m.name} | #{m.aggregateRating} | #{m.totalReviews} | #{m.year} | #{m.length} | #{m.budget} | #{genre} | #{m.mpaa}"
+        end
+
+        Hirb::View.enable
+        Hirb::View.capture_and_render { 
+          puts "[ID] | NAME | AGGREGATE RATING | TOTAL REVIEWS | YEAR | LENGTH | BUDGET | GENRE | MPAA"
+          puts formatted_movies
+        }
+      elsif command == "delete"
+        found_movie = Movie.find_by(name: options[:name])
+        if found_movie.nil?
+          similar = Movie.find_similar(options[:name])
+          formatted_result = "No movie found."
+        else
+          found_movie.delete
+          formatted_result = "The movie \"#{options[:name]}\" has been deleted from the database."
+        end
+        puts formatted_result
+        if similar and similar[0]
+          puts "Did you mean: "
+          puts similar.join(", ")
+        end
+      elsif command == "edit"
+        begin
+          movie = Movie.find(options[:id])
+        rescue => e
+          puts "Movie #{options[:id]} couldn't be found."
+        end          
+        if movie
+          movie.update(options)
+          genre_name = Genre.parse_name(movie.genre_id)
+          puts "A #{category} was updated and is now titled #{movie.name} with genre #{genre_name}, year #{movie.year}, length #{movie.length}, budget #{movie.budget}, and mpaa #{movie.mpaa} was created."
+        end
+      elsif command == "create"
+        error_messages = ParseArguments.validate(options)
+        if error_messages.empty?
+          movie = Movie.new(options)
+          success = movie.save
+          if success
+            genre_name = Genre.parse_name(movie.genre_id)
+            puts "A #{category} titled #{movie.name} with genre #{genre_name}, year #{movie.year}, length #{movie.length}, budget #{movie.budget}, and mpaa #{movie.mpaa} was created."
+          else
+            puts "A #{category} titled #{options[:name]} has already been created."
+          end
+        else
+          puts error_messages
+        end
+      else
+        puts "Command not recognized. Try create, search, edit, list, or delete."
       end
-      puts formatted_result
-      if similar and similar[0]
-        puts "Did you mean: "
-        puts similar.join(", ")
+    elsif category == "review"
+      if command == "create"
+        error_messages = ParseArguments.validate_review(options)
+        if error_messages.empty?
+          movie = Movie.find_by(name: "#{options[:name]}")
+          review = Review.new(movie_id: movie.id, review: options[:review].to_f)
+          review.save
+
+          options[:aggregateRating] = movie.aggregateRating ? ((movie.totalReviews * movie.aggregateRating) + review.review.to_f) / (movie.totalReviews + 1) : review.review.to_f
+          options[:totalReviews] = movie.totalReviews ? movie.totalReviews + 1 : 1
+          movie.update(aggregateRating: options[:aggregateRating], totalReviews: options[:totalReviews])
+
+          puts "A movie review of #{review.review.to_f} for #{options[:name]} was created."
+        else
+          puts error_messages
+        end
+      elsif command == "search"
+        movie = Movie.find_by(name: "#{options[:name]}")
+        genre = Genre.parse_name(movie.genre_id) if movie
+        found_reviews = movie ? Review.all.where(movie_id: movie.id) : []
+        if found_reviews.empty?
+          similar = Movie.find_similar(options[:name])
+          formatted_result = "No movie reviews found with title '#{options[:name]}'. Would you like to create one? Just use the command 'create review'."
+        else
+          Hirb::View.enable
+          Hirb::View.capture_and_render { 
+            found_reviews.each do |fr|
+              puts "[#{fr.id}] #{options[:name]}: a #{genre} film with a review score of #{fr.review}"
+            end
+          }
+        end
+        puts formatted_result
+        if similar and similar[0]
+          puts "Did you mean: "
+          puts similar.join(", ")
+        end
+      elsif command == "delete"
+        error_messages = ParseArguments.validate_review_delete(options)
+        if error_messages.empty?
+          movie = Movie.find_by(name: options[:name])
+          found_review = Review.find_by(movie_id: movie.id) if movie
+          if movie.nil?
+            formatted_result = "No movie found."
+          else
+            review_delete = Review.find(options[:id])
+            unless movie.totalReviews == 1
+              options[:aggregateRating] = ((movie.totalReviews * movie.aggregateRating) - review_delete["review"]) / (movie.totalReviews - 1)
+            else
+              options[:aggregateRating] = 0
+            end
+            options[:totalReviews] = movie.totalReviews - 1
+            movie.update(aggregateRating: options[:aggregateRating], totalReviews: options[:totalReviews])
+            review_delete.destroy
+            formatted_result = "The movie review for \"#{options[:name]}\" has been deleted from the database."
+          end
+          puts formatted_result
+        else
+          puts error_messages
+        end
+      else
+        puts "Command not recognized. Try create, search, edit, list, or delete."
       end
     else
-      puts error_messages
+      puts "Please enter a correct category."
     end
-  else
-    puts "Command not recognized. Try create, search, edit, list, or delete."
   end
-else
-  puts "Please enter a correct category."
 end
+
+eac = EAC.new()
+eac.main()

@@ -1,7 +1,6 @@
 class CreateGenres < ActiveRecord::Migration
   def change
-    create_table :genres, :id => false do |t|
-      t.integer :genreID, :null => false
+    create_table :genres do |t|
       t.integer :action
       t.integer :animation
       t.integer :comedy
